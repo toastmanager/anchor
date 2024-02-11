@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "890195033510",
+    "project_id": "anchor-f3a69",
+    "storage_bucket": "anchor-f3a69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890195033510:android:cf05cd00739dc0977f2367",
+        "android_client_info": {
+          "package_name": "com.example.anchor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtjqRVePXgotY0xRoJ5PyO6AORwpe-vwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
