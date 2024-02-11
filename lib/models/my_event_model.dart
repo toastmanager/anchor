@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 
 class MyEvent extends Equatable {
   final String uid;
+  final String organizer;
   final String title;
   final Timestamp beginTime;
   final int cost;
@@ -14,6 +15,7 @@ class MyEvent extends Equatable {
 
   const MyEvent({
     required this.uid,
+    required this.organizer,
     required this.title,
     required this.beginTime,
     required this.cost,
@@ -25,6 +27,7 @@ class MyEvent extends Equatable {
   static MyEvent empty = MyEvent(
     uid: '',
     title: '',
+    organizer: '',
     beginTime: Timestamp(0, 0),
     cost: 0,
     image: '',
@@ -41,6 +44,7 @@ class MyEvent extends Equatable {
       uid: event.uid,
       title: event.title,
       beginTime: event.beginTime,
+      organizer: event.organizer,
       cost: event.cost,
       image: event.image,
       description: event.description,
@@ -52,6 +56,7 @@ class MyEvent extends Equatable {
     return MyEvent(
       uid: entity.uid,
       title: entity.title,
+      organizer: entity.organizer,
       beginTime: entity.beginTime,
       cost: entity.cost,
       image: entity.image,

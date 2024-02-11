@@ -31,7 +31,7 @@ class _MainAppState extends State<MainApp> {
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
           brightness: Brightness.light,
-          primary: Color(0xFF554AF0),
+          primary: Color(0xFF09304A),
           error: Color(0xffFF0000),
           onSurface: Color(0xFF04021D),
           onSurfaceVariant: Color(0xFF686777),

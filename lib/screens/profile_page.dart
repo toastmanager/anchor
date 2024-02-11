@@ -126,10 +126,11 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
 
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height - 85,
+            height: MediaQuery.of(context).size.height - 100,
             child: TabBarView(
               controller: tabController,
               children: tabsList,

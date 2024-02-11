@@ -40,7 +40,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/images/anchor_logo.png
+    - assets/images/default_avatar.png
 
   fonts:
     - family: Onest

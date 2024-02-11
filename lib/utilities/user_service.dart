@@ -33,7 +33,30 @@ class UserService {
       log(e.toString());
       rethrow;
     }
+  }
 
+  Future<MyUser?> getUserByUid(String uid) async {
+    try {
+      // TODO: use userDataStream instead of simple userData
+      // final userDataStream = _db.collection('users').doc(user.uid).snapshots();
+      final userData = await _db
+        .collection('users')
+        .doc(uid)
+        .get();
+      
+      return MyUser(
+        uid: uid,
+        email: '',
+        role: userData['role'] as String,
+        fullname: userData['fullname'] as String,
+        picture: userData['picture'] as String?,
+        scores: userData['scores'] as int,
+        earnedScores: userData['earnedScores'] as int,
+      );
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
   }
 
   Future<void> signIn(String email, String password) async {

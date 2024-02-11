@@ -1,6 +1,7 @@
 import 'package:anchor/components/event_card.dart';
 import 'package:anchor/models/my_event_model.dart';
 import 'package:anchor/utilities/event_service.dart';
+import 'package:anchor/utilities/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:unikit/unikit.dart';
 
@@ -14,6 +15,7 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   final appBarHeight = kToolbarHeight + 11;
   final EventService eventService = EventService();
+  final _userService = UserService();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class _EventsPageState extends State<EventsPage> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
             return const Center(
               child: Text('no data'),
@@ -46,14 +48,20 @@ class _EventsPageState extends State<EventsPage> {
                 return FutureBuilder(
                   future: event.isUserParticipate,
                   builder: (context, isUserParticipate) {
-                    return EventCard(
-                      uid: event.uid,
-                      title: event.title,
-                      description: event.description,
-                      isUserParticipate: isUserParticipate.data,
-                      beginTime: event.beginTime,
-                      cost: event.cost,
-                      imageURL: event.image,
+                    return FutureBuilder(
+                      future: _userService.getUserByUid(event.organizer),
+                      builder: (context, organizer) {
+                        return EventCard(
+                          uid: event.uid,
+                          title: event.title,
+                          description: event.description,
+                          isUserParticipate: isUserParticipate.data,
+                          beginTime: event.beginTime,
+                          cost: event.cost,
+                          organizer: organizer.data,
+                          imageURL: event.image,
+                        );
+                      }
                     );
                   }
                 );

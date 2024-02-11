@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/utilities/event_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,6 +17,7 @@ class EventCard extends StatefulWidget {
     required this.beginTime,
     required this.cost,
     required this.imageURL,
+    required this.organizer,
   }) : super(key: key);
 
   final String uid;
@@ -25,6 +27,7 @@ class EventCard extends StatefulWidget {
   final int cost;
   final String imageURL;
   final bool? isUserParticipate;
+  final MyUser? organizer;
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -67,16 +70,21 @@ class _EventCardState extends State<EventCard> {
       signAction = () => _eventService.eventUnsign(widget.uid);
     }
 
-    final backgroundImage = CachedNetworkImageProvider(widget.imageURL);
-    return InkWell(
-      onTap: () => switchShrink(),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: AnimatedSize(
-          duration: const Duration(milliseconds: 500),
-          alignment: Alignment.topCenter,
+    ImageProvider<Object> backgroundImage = CachedNetworkImageProvider(widget.imageURL);
+    ImageProvider<Object> organizerImage = widget.organizer?.picture != null
+        ? CachedNetworkImageProvider(widget.organizer!.picture!)
+        : const AssetImage('assets/images/default_avatar.png') as ImageProvider<Object>;
+    
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 500),
+      reverseDuration: const Duration(milliseconds: 500),
+      alignment: Alignment.topCenter,
+      child: InkWell(
+        onTap: () => switchShrink(),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Stack(
             children: [
               Positioned.fill(
@@ -99,13 +107,14 @@ class _EventCardState extends State<EventCard> {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      const Color(0xFF554AF0),
-                      const Color(0xFF554AF0).withAlpha(70),
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.primary.withAlpha(100),
                     ],
                   ),
                 ),
                 padding: const EdgeInsets.all(16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.title,
@@ -147,7 +156,30 @@ class _EventCardState extends State<EventCard> {
                         children: [
                           const SizedBox(height: 16),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Row(
+                                children: [
+                                  ClipOval(
+                                    child: Image(
+                                      image: organizerImage,
+                                      height: 40,
+                                      width: 40,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    widget.organizer!.fullname
+                                      .split(" ")
+                                      .sublist(0, 2)
+                                      .join(" "),
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Theme.of(context).colorScheme.background
+                                    ),
+                                  )
+                                ],
+                              ),
                               Column(
                                 children: [
                                   UniButtonAccentSmall(
