@@ -7,11 +7,15 @@ class UniBottomNavBar extends StatelessWidget {
     this.currentIndex = 0, 
     required this.items,
     this.onTap,
+    this.showSelectedLabels,
+    this.showUnselectedLabels,
   });
 
   final List<BottomNavigationBarItem> items;
   final int currentIndex;
   final void Function(int)? onTap;
+  final bool? showSelectedLabels;
+  final bool? showUnselectedLabels;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,8 @@ class UniBottomNavBar extends StatelessWidget {
       children: [
         const UniDividerSmall(),
         BottomNavigationBar(
+          showSelectedLabels: showSelectedLabels,
+          showUnselectedLabels: showUnselectedLabels,
           type: BottomNavigationBarType.fixed,
           selectedIconTheme: IconThemeData(
             color: Theme.of(context).colorScheme.primary,

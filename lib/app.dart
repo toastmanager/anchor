@@ -1,3 +1,5 @@
+import 'package:anchor/screens/main_wrapper.dart';
+import 'package:anchor/screens/welcome_page/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -61,13 +63,9 @@ class _MainAppState extends State<MainApp> {
       home: Builder(
         builder: (context) {
           if (_auth.currentUser != null) {
-            return const Center(
-              child: Text('Authorized'),
-            );
+            return const MainWrapper();
           } else {
-            return const Center(
-              child: Text('Not authorized'),
-            );
+            return const WelcomePage();
           }
         },
       ),
