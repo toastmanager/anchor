@@ -1,7 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  final _auth = FirebaseAuth.instance;
+
+  User? user;
+
+  @override
+  void initState() {
+    _auth.authStateChanges().listen((newUserState) {
+      user = newUserState;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +60,15 @@ class MainApp extends StatelessWidget {
       ),
       home: Builder(
         builder: (context) {
-          return const Placeholder();
+          if (_auth.currentUser != null) {
+            return const Center(
+              child: Text('Authorized'),
+            );
+          } else {
+            return const Center(
+              child: Text('Not authorized'),
+            );
+          }
         },
       ),
     );
