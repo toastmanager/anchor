@@ -1,0 +1,44 @@
+name: anchor
+description: "Anchor app"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  iconly: ^1.0.1
+
+  unikit:
+    path: packages/unikit
+  equatable: ^2.0.5
+  flutter_svg: ^2.0.9
+
+  # Firebase
+  firebase_core: ^2.25.4
+  cloud_firestore: ^4.15.4
+  firebase_auth: ^4.17.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: Onest
+      fonts:
+        - asset: fonts/Onest-Regular.ttf
+        - asset: fonts/Onest-Black.ttf
+        - asset: fonts/Onest-Bold.ttf
+        - asset: fonts/Onest-ExtraBold.ttf
+        - asset: fonts/Onest-ExtraLight.ttf
+        - asset: fonts/Onest-Light.ttf
+        - asset: fonts/Onest-Medium.ttf
+        - asset: fonts/Onest-SemiBold.ttf
+        - asset: fonts/Onest-Thin.ttf
