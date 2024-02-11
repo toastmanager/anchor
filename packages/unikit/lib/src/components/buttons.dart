@@ -7,6 +7,8 @@ class UniButtonAccentMedium extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.onPressed,
+    this.backgroundColor,
+    this.foregroundColor,
     this.padding = const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
     this.shadowColor = Colors.transparent,
   });
@@ -15,6 +17,8 @@ class UniButtonAccentMedium extends StatelessWidget {
   final Function()? onPressed;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   final Color shadowColor;
   final EdgeInsets padding;
 
@@ -70,6 +74,10 @@ class UniButtonAccentSmall extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.onPressed,
+    this.height,
+    this.width,
+    this.backgroundColor,
+    this.foregroundColor,
     this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
     this.shadowColor = Colors.transparent,
   });
@@ -78,8 +86,12 @@ class UniButtonAccentSmall extends StatelessWidget {
   final Function()? onPressed;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   final Color shadowColor;
   final EdgeInsets padding;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +100,10 @@ class UniButtonAccentSmall extends StatelessWidget {
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
       onPressed: onPressed,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      height: height,
+      width: width,
       textStyle: Theme.of(context).textTheme.labelSmall,
       shadowColor: shadowColor,
       padding: padding,
@@ -133,6 +149,10 @@ class UniButtonAccent extends StatelessWidget {
     super.key,
     required this.text,
     required this.textStyle,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.height,
+    this.width,
     this.prefixIcon,
     this.suffixIcon,
     this.onPressed,
@@ -145,18 +165,29 @@ class UniButtonAccent extends StatelessWidget {
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final TextStyle? textStyle;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   final Color shadowColor;
   final EdgeInsets padding;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
+    Color? buttonBackgroundColor = backgroundColor;
+    buttonBackgroundColor ??= Theme.of(context).colorScheme.primary;
+    Color? buttonForegroundColor = foregroundColor;
+    buttonForegroundColor ??= Theme.of(context).colorScheme.onPrimary;
+    
     return UniElevatedButton(
       text: text, 
       textStyle: textStyle, 
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+      backgroundColor: buttonBackgroundColor,
+      foregroundColor: buttonForegroundColor,
+      height: height,
+      width: width,
       shadowColor: shadowColor,
       onPressed: onPressed,
       padding: padding,
@@ -210,6 +241,8 @@ class UniElevatedButton extends StatelessWidget {
     required this.textStyle,
     required this.backgroundColor,
     required this.foregroundColor,
+    this.height,
+    this.width,
     this.prefixIcon,
     this.suffixIcon,
     this.onPressed,
@@ -228,6 +261,8 @@ class UniElevatedButton extends StatelessWidget {
   final Color backgroundColor;
   final Color foregroundColor;
   final Color shadowColor;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -246,23 +281,28 @@ class UniElevatedButton extends StatelessWidget {
         textStyle: textStyle,
         shadowColor: shadowColor,
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (prefixIcon != null)
-            Icon(
-              prefixIcon,
-              size: iconSize,
-            ),
-          if (prefixIcon != null) const SizedBox(width: 8),
-          Text(text),
-          if (suffixIcon != null) const SizedBox(width: 8),
-          if (suffixIcon != null)
-            Icon(
-              suffixIcon,
-              size: iconSize,
-            ),
-        ],
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            if (prefixIcon != null)
+              Icon(
+                prefixIcon,
+                size: iconSize,
+              ),
+            if (prefixIcon != null) const SizedBox(width: 8),
+            Text(text),
+            if (suffixIcon != null) const SizedBox(width: 8),
+            if (suffixIcon != null)
+              Icon(
+                suffixIcon,
+                size: iconSize,
+              ),
+          ],
+        ),
       ),
     );
   }

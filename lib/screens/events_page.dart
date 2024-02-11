@@ -36,15 +36,22 @@ class _EventsPageState extends State<EventsPage> {
 
           List events = snapshot.data?.docs ?? [];
 
-          return ListView.separated(
-            itemCount: events.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              MyEvent event = events[index].data();
-              return EventCard(
-                title: event.title,
-              );
-            },
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ListView.separated(
+              itemCount: events.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              itemBuilder: (context, index) {
+                MyEvent event = events[index].data();
+                return EventCard(
+                  title: event.title,
+                  description: event.description,
+                  beginTime: event.beginTime,
+                  cost: event.cost,
+                  imageURL: event.image,
+                );
+              },
+            ),
           );
         }
       ),
