@@ -9,7 +9,7 @@ class MyEvent extends Equatable {
   final int cost;
   final String description;
   final String image;
-  final List<String> participants;
+  final List<dynamic> participants;
 
   const MyEvent({
     required this.uid,
@@ -34,27 +34,27 @@ class MyEvent extends Equatable {
   bool get isEmpty => this == MyEvent.empty;
   bool get isNotEmpty => this != MyEvent.empty;
 
-  MyEventEntity toEntity() {
+  static MyEventEntity toEntity(MyEvent event) {
     return MyEventEntity(
-      uid: uid,
-      title: title,
-      beginTime: beginTime,
-      cost: cost,
-      image: image,
-      description: description,
-      participants: participants,
+      uid: event.uid,
+      title: event.title,
+      beginTime: event.beginTime,
+      cost: event.cost,
+      image: event.image,
+      description: event.description,
+      participants: event.participants,
     );
   }
 
-  MyEvent fromEntity(MyEventEntity entity) {
+  static MyEvent fromEntity(MyEventEntity entity) {
     return MyEvent(
-      uid: uid,
-      title: title,
-      beginTime: beginTime,
-      cost: cost,
-      image: image,
-      description: description,
-      participants: participants,
+      uid: entity.uid,
+      title: entity.title,
+      beginTime: entity.beginTime,
+      cost: entity.cost,
+      image: entity.image,
+      description: entity.description,
+      participants: entity.participants,
     );
   }
 

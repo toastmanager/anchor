@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class EventCard extends StatefulWidget {
-  const EventCard({super.key});
+  const EventCard({
+    super.key,
+    required this.title,
+  });
+
+  final String title;
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -10,10 +15,10 @@ class EventCard extends StatefulWidget {
 class _EventCardState extends State<EventCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [],
-      ),
+    return Column(
+      children: [
+        Text(widget.title)
+      ],
     );
   }
 }

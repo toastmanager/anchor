@@ -8,7 +8,7 @@ class MyEventEntity extends Equatable {
   final int cost;
   final String description;
   final String image;
-  final List<String> participants;
+  final List<dynamic> participants;
 
   const MyEventEntity({
     required this.uid,
@@ -32,15 +32,15 @@ class MyEventEntity extends Equatable {
     };
   }
 
-  MyEventEntity fromDocument(Map<String, Object?> doc) {
+  static MyEventEntity fromDocument(Map<String, Object?> doc, String uid) {
     return MyEventEntity(
       uid: uid,
-      title: title,
-      beginTime: beginTime,
-      cost: cost,
-      image: image,
-      description: description,
-      participants: participants,
+      title: doc["title"] as String,
+      beginTime: doc["beginTime"] as Timestamp,
+      cost: doc["cost"] as int,
+      image: doc["image"] as String,
+      description: doc["description"] as String,
+      participants: doc["participants"] as List<dynamic>,
     );
   }
 
