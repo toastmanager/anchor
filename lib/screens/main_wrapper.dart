@@ -23,16 +23,16 @@ class _MainWrapperState extends State<MainWrapper> {
   ];
 
   final List<IconData> unselectedIcons = [
-    IconlyLight.home,
-    IconlyLight.chat,
-    IconlyLight.folder,
+    IconlyLight.chart,
+    IconlyLight.buy,
+    IconlyLight.star,
     IconlyLight.profile,
   ];
 
   final List<IconData> selectedIcons = [
-    IconlyBold.home,
-    IconlyBold.chat,
-    IconlyBold.folder,
+    IconlyBold.chart,
+    IconlyBold.buy,
+    IconlyBold.star,
     IconlyBold.profile,
   ];
 

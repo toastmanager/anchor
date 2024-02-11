@@ -74,11 +74,13 @@ class _SignUpPageStepOneState extends State<SignUpPageStepOne> {
                 hintText: 'Введите свою почту',
               ),
               const Text('ФИО'),
+              const SizedBox(height: 10),
               UniTextField(
                 controller: fullnameController,
                 hintText: 'Введите ваше ФИО',
               ),
               const Text('Пароль'),
+              const SizedBox(height: 10),
               const SizedBox(height: 10),
               UniTextField(
                 controller: passwordController,

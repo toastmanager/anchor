@@ -1,11 +1,40 @@
 import 'dart:developer';
-
+import 'package:anchor/models/my_user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserService {
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
+
+  Future<MyUser?> getCurrentUser() async {
+    final User? user = _auth.currentUser;
+    if (user == null) {
+      return null;
+    }
+    try {
+      // TODO: use userDataStream instead of simple userData
+      // final userDataStream = _db.collection('users').doc(user.uid).snapshots();
+      final userData = await _db
+        .collection('users')
+        .doc(user.uid)
+        .get();
+      
+      return MyUser(
+        uid: user.uid,
+        email: user.email!,
+        role: userData['role'] as String,
+        fullname: userData['fullname'] as String,
+        picture: userData['picture'] as String?,
+        scores: userData['scores'] as int,
+        earnedScores: userData['earnedScores'] as int,
+      );
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+
+  }
 
   Future<void> signIn(String email, String password) async {
     try {
@@ -17,7 +46,12 @@ class UserService {
   }
   
   Future<void> logOut() async {
-    await _auth.signOut();
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
   }
 
   Future<void> signUp(String email, String password, String fullname) async {
@@ -45,6 +79,25 @@ class UserService {
   }
 
   Future<void> resetPassword(String email) async {
-    await _auth.sendPasswordResetEmail(email: email);
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    try {
+      User? user = _auth.currentUser;
+      await _db
+        .collection('users')
+        .doc(user?.uid)
+        .delete();
+      await user?.delete();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
   }
 }
