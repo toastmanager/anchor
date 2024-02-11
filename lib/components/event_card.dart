@@ -127,8 +127,10 @@ class _EventCardState extends State<EventCard> {
                       Column(
                         children: [
                           const SizedBox(height: 16),
-                          SizedBox(
-                            height: 300,
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              maxHeight: 250,
+                            ),
                             child: SingleChildScrollView(
                               child: Text(
                                 widget.description,
