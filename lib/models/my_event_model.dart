@@ -1,4 +1,5 @@
 import 'package:anchor/entities/my_event_entity.dart';
+import 'package:anchor/utilities/event_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
@@ -33,6 +34,7 @@ class MyEvent extends Equatable {
 
   bool get isEmpty => this == MyEvent.empty;
   bool get isNotEmpty => this != MyEvent.empty;
+  Future<bool> get isUserParticipate async => await EventService().isUserParticipate(uid);
 
   static MyEventEntity toEntity(MyEvent event) {
     return MyEventEntity(

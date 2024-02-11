@@ -43,12 +43,19 @@ class _EventsPageState extends State<EventsPage> {
               separatorBuilder: (_, __) => const SizedBox(height: 8),
               itemBuilder: (context, index) {
                 MyEvent event = events[index].data();
-                return EventCard(
-                  title: event.title,
-                  description: event.description,
-                  beginTime: event.beginTime,
-                  cost: event.cost,
-                  imageURL: event.image,
+                return FutureBuilder(
+                  future: event.isUserParticipate,
+                  builder: (context, isUserParticipate) {
+                    return EventCard(
+                      uid: event.uid,
+                      title: event.title,
+                      description: event.description,
+                      isUserParticipate: isUserParticipate.data,
+                      beginTime: event.beginTime,
+                      cost: event.cost,
+                      imageURL: event.image,
+                    );
+                  }
                 );
               },
             ),

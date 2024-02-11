@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:anchor/utilities/event_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -8,24 +9,30 @@ import 'package:unikit/unikit.dart';
 class EventCard extends StatefulWidget {
   const EventCard({
     Key? key,
+    required this.uid,
     required this.title,
     required this.description,
+    required this.isUserParticipate,
     required this.beginTime,
     required this.cost,
     required this.imageURL,
   }) : super(key: key);
 
+  final String uid;
   final String title;
   final String description;
   final Timestamp beginTime;
   final int cost;
   final String imageURL;
+  final bool? isUserParticipate;
 
   @override
   State<EventCard> createState() => _EventCardState();
 }
 
 class _EventCardState extends State<EventCard> {
+  final EventService _eventService = EventService();
+
   bool isShrinked = true;
   bool showDescription = false;
 
@@ -45,9 +52,22 @@ class _EventCardState extends State<EventCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final backgroundImage = CachedNetworkImageProvider(widget.imageURL);
+  void initState() {
+    super.initState();
+  }
 
+
+  @override
+  Widget build(BuildContext context) {
+    String signText = 'Записаться';
+    Function signAction = () => _eventService.eventSignUp(widget.uid);;
+
+    if (widget.isUserParticipate != null && widget.isUserParticipate!) {
+      signText = 'Отписаться';
+      signAction = () => _eventService.eventUnsign(widget.uid);
+    }
+
+    final backgroundImage = CachedNetworkImageProvider(widget.imageURL);
     return InkWell(
       onTap: () => switchShrink(),
       child: Container(
@@ -137,16 +157,15 @@ class _EventCardState extends State<EventCard> {
                                     onPressed: () => switchDescription(),
                                   ),
                                   UniButtonAccentSmall(
-                                    text: 'Записаться',
+                                    text: signText,
                                     height: 20,
                                     width: 90,
                                     backgroundColor: Theme.of(context).colorScheme.background,
                                     foregroundColor: Theme.of(context).colorScheme.primary,
-                                    // TODO: event signUp ability
-                                    onPressed: () {},
+                                    onPressed: () => signAction(),
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ],
