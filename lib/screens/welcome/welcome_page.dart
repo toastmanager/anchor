@@ -1,5 +1,5 @@
-import 'package:anchor/screens/welcome_page/sign_in_page.dart';
-import 'package:anchor/screens/welcome_page/sign_up_page.dart';
+import 'package:anchor/screens/welcome/sign_in_page.dart';
+import 'package:anchor/screens/welcome/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:unikit/unikit.dart';
 
@@ -19,7 +19,7 @@ class WelcomePage extends StatelessWidget {
                 Expanded(child: UniButtonAccentMedium(
                   text: 'Войти',
                   onPressed: () => Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => SignInPage(),
+                    builder: (context) => const SignInPage(),
                   )),
                 )),
               ],

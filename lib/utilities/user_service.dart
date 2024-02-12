@@ -7,6 +7,14 @@ class UserService {
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> getFirstFifteenLeaders() {
+    return _db
+      .collection('users')
+      .orderBy('earnedScores', descending: true)
+      .limit(15)
+      .snapshots();
+  }
+
   Future<MyUser?> getCurrentUser() async {
     final User? user = _auth.currentUser;
     if (user == null) {

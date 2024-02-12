@@ -1,7 +1,7 @@
-import 'package:anchor/screens/events_page/events_page.dart';
+import 'package:anchor/screens/events/events_page.dart';
 import 'package:anchor/screens/leaders_page.dart';
+import 'package:anchor/screens/personal_account/personal_account_page.dart';
 import 'package:anchor/screens/products_page.dart';
-import 'package:anchor/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:unikit/unikit.dart';
@@ -23,10 +23,10 @@ class _MainWrapperState extends State<MainWrapper> {
 
   int pageIndex = 0;
   final List<Widget> pagesList = <Widget>[
-    LeadersPage(),
-    ProductsPage(),
-    EventsPage(),
-    ProfilePage(),
+    const LeadersPage(),
+    const ProductsPage(),
+    const EventsPage(),
+    const PersonalAccountPage(),
   ];
 
   final List<IconData> unselectedIcons = [

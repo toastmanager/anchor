@@ -1,5 +1,5 @@
 import 'package:anchor/screens/main_wrapper.dart';
-import 'package:anchor/screens/welcome_page/welcome_page.dart';
+import 'package:anchor/screens/welcome/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

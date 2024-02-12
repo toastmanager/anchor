@@ -1,12 +1,13 @@
 import 'package:anchor/components/event_card.dart';
 import 'package:anchor/models/my_event_model.dart';
 import 'package:anchor/models/my_user_model.dart';
-import 'package:anchor/screens/event_adding_page.dart';
+import 'package:anchor/screens/events/event_adding_page.dart';
 import 'package:anchor/utilities/event_service.dart';
 import 'package:anchor/utilities/user_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconly/iconly.dart';
 import 'package:unikit/unikit.dart';
 
 class EventsPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateMixin {
-  final appBarHeight = kToolbarHeight + 11 + 48 + 1.5;
+  final appBarHeight = kToolbarHeight + 11 + 48 + 1.5 + 11;
   final EventService eventService = EventService();
   final _userService = UserService();
   final int _tabsLength = 3;
@@ -89,9 +90,22 @@ class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateM
             bottomActions: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TabBar(
-                  tabs: tabs,
-                  controller: tabController,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(IconlyLight.wallet),
+                        const SizedBox(width: 8),
+                        Text(user.scores.toString()),
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+                    TabBar(
+                      tabs: tabs,
+                      controller: tabController,
+                    ),
+                  ],
                 )
               )
             ],
