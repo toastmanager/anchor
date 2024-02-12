@@ -17,7 +17,6 @@ class EventAddingPage extends StatefulWidget {
 class _EventAddingPapeState extends State<EventAddingPage> {
   final double appBarHeight = kToolbarHeight + 11;  
 
-  //TODO: image adding ability
   XFile? image;
 
   final nameController = TextEditingController();
@@ -26,7 +25,7 @@ class _EventAddingPapeState extends State<EventAddingPage> {
   final timeController = TextEditingController();
   final organizerController = TextEditingController();
   final costController = TextEditingController();
-  late final imagePathController;
+  late final TextEditingController imagePathController;
   final ImagePicker _picker = ImagePicker();
 
 

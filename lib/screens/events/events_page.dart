@@ -217,6 +217,7 @@ class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateM
       }
     );
   }
+  
   StreamBuilder<QuerySnapshot<Object?>> completedEvents() {
     return StreamBuilder(
       stream: eventService.getCurrentUserCompletedEvents(),

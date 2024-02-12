@@ -60,6 +60,17 @@ class EventService {
     }
   }
 
+  Stream<QuerySnapshot> getCurrentUserCreatedEvents() {
+    try {
+      return _eventsRef
+        .where('organizer', isEqualTo: _auth.currentUser?.uid)
+        .snapshots();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
   Stream<QuerySnapshot> getEvents() {
     try {
       return _eventsRef.snapshots();

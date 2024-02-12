@@ -1,6 +1,7 @@
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/screens/personal_account/profile_screen.dart';
 import 'package:anchor/screens/personal_account/schedule_screen.dart';
+import 'package:anchor/screens/personal_account/user_created_events_screen.dart';
 import 'package:anchor/utilities/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -84,7 +85,14 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> with SingleTi
             height: MediaQuery.of(context).size.height - appBarHeight - 85,
             child: const ScheduleScreen()
           ),
-          const Placeholder(),
+          SizedBox(
+            height: MediaQuery.of(context).size.height - appBarHeight - 85,
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: UserCreatedEventsScreen(),
+            ),
+          ),
+          // const Placeholder(),
           ProfileScreen(
             height: MediaQuery.of(context).size.height - appBarHeight - 85,
             user: user,
