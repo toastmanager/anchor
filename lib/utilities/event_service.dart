@@ -29,7 +29,10 @@ class EventService {
 
   Stream<QuerySnapshot> getFutureEvents() {
     try {
-      return _eventsRef.where('beginTime', isGreaterThan: DateTime.now()).snapshots();
+      return _eventsRef
+        .where('beginTime', isGreaterThan: DateTime.now())
+        .orderBy('beginTime')
+        .snapshots();
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -41,6 +44,7 @@ class EventService {
       return _eventsRef
         .where('participants', arrayContains: _auth.currentUser?.uid)
         .where('beginTime', isLessThan: DateTime.now())
+        .orderBy('beginTime')
         .snapshots();
     } catch (e) {
       log(e.toString());
@@ -53,6 +57,7 @@ class EventService {
       return _eventsRef
         .where('participants', arrayContains: _auth.currentUser?.uid)
         .where('beginTime', isGreaterThan: DateTime.now())
+        .orderBy('beginTime')
         .snapshots();
     } catch (e) {
       log(e.toString());
