@@ -32,7 +32,8 @@ class _MainAppState extends State<MainApp> {
         colorScheme: const ColorScheme.light(
           brightness: Brightness.light,
           primary: Color(0xFF554AF0),
-          error: Color(0xffFF0000),
+          error: Color(0xFFFF0000),
+          surface: Color(0xFFF8F8FA),
           onSurface: Color(0xFF04021D),
           onSurfaceVariant: Color(0xFF686777),
           outline: Color(0xFFE2E3E4),

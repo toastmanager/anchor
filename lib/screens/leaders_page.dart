@@ -86,7 +86,7 @@ class _LeadersPageState extends State<LeadersPage> {
                           const SizedBox(width: 10),
                           UserAvatar(
                             imageURL: snapshotData[index]['picture'],
-                            size: 40
+                            size: 36
                           ),
                           const SizedBox(width: 8),
                           Text(

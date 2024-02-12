@@ -1,4 +1,4 @@
-import 'package:anchor/components/event_card.dart';
+import 'package:anchor/screens/events/event_card.dart';
 import 'package:anchor/models/my_event_model.dart';
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/screens/events/event_adding_page.dart';

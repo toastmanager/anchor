@@ -24,7 +24,9 @@ class NewsService {
 
   Stream<QuerySnapshot> getNews() {
     try {
-      return _newsRef.snapshots();
+      return _newsRef
+        .orderBy('createdAt', descending: true)
+        .snapshots();
     } catch (e) {
       log(e.toString());
       rethrow;
