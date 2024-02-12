@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:unikit/unikit.dart';
 
-class LeadersPage extends StatefulWidget {
-  const LeadersPage({super.key});
+class RatingPage extends StatefulWidget {
+  const RatingPage({super.key});
 
   @override
-  State<LeadersPage> createState() => _LeadersPageState();
+  State<RatingPage> createState() => _RatingPageState();
 }
 
-class _LeadersPageState extends State<LeadersPage> {
+class _RatingPageState extends State<RatingPage> {
   final appBarHeight = kToolbarHeight + 11 + 35;
   final UserService _userService = UserService();
 
@@ -42,9 +42,17 @@ class _LeadersPageState extends State<LeadersPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(IconlyLight.wallet),
+                  Icon(
+                    IconlyLight.wallet,
+                    color: Theme.of(context).colorScheme.primary
+                  ),
                   const SizedBox(width: 8),
-                  Text(user.earnedScores.toString()),
+                  Text(
+                    user.earnedScores.toString(),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.primary
+                    ),
+                  ),
                 ],
               ),
             ],

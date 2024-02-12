@@ -1,5 +1,5 @@
 import 'package:anchor/screens/events/events_page.dart';
-import 'package:anchor/screens/leaders_page.dart';
+import 'package:anchor/screens/rating_page.dart';
 import 'package:anchor/screens/news/news_page.dart';
 import 'package:anchor/screens/personal_account/personal_account_page.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class _MainWrapperState extends State<MainWrapper> {
   int pageIndex = 0;
   final List<Widget> pagesList = <Widget>[
     const NewsPage(),
-    const LeadersPage(),
+    const RatingPage(),
     const EventsPage(),
     const PersonalAccountPage(),
   ];

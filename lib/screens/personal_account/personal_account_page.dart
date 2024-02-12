@@ -109,9 +109,17 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> with SingleTi
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(IconlyLight.wallet),
+                  Icon(
+                    IconlyLight.wallet,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   const SizedBox(width: 8),
-                  Text(user.scores.toString()),
+                  Text(
+                    user.scores.toString(),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.primary
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
