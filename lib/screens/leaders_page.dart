@@ -1,3 +1,4 @@
+import 'package:anchor/components/strings.dart';
 import 'package:anchor/components/user_avatar.dart';
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/utilities/user_service.dart';
@@ -72,15 +73,39 @@ class _LeadersPageState extends State<LeadersPage> {
                     children: [
                       Row(
                         children: [
-                          Text("${index.toString()}. "),
+                          SizedBox(
+                            width: 10,
+                            child: Text(
+                              (index + 1).toString(),
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.primary
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
                           UserAvatar(
                             imageURL: snapshotData[index]['picture'],
                             size: 40
                           ),
-                          Text(snapshotData[index]['fullname']),
+                          const SizedBox(width: 8),
+                          Text(
+                            surnameName(snapshotData[index]['fullname']),
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: snapshotData[index].id == user.uid
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).colorScheme.onBackground
+                            ),
+                          ),
                         ],
                       ),
-                      Text(snapshotData[index]['earnedScores'].toString()),
+                      Text(
+                        snapshotData[index]['earnedScores'].toString(),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.primary
+                        ),
+                      ),
                     ],
                   ),
                 );

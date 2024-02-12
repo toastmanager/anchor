@@ -11,3 +11,16 @@ final timeInputMask = MaskTextInputFormatter(
   filter: {'#': RegExp(r'[0-9]')},
   type: MaskAutoCompletionType.lazy
 );
+
+String surnameName(String fullname) =>
+  fullname
+    .split(" ")
+    .sublist(0, 2)
+    .join(" ");
+
+String nameSurname(String fullname) =>
+  fullname
+    .split(" ")
+    .sublist(0, 2)
+    .reversed
+    .join(" ");
