@@ -18,7 +18,7 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> with SingleTi
   final UserService userService = UserService();
   late final Future<MyUser?> user;
   
-  final appBarHeight = kToolbarHeight + 43 + 24 + 9.5;
+  final appBarHeight = kToolbarHeight + 43 + 30 + 9.5;
   
   late final TabController _tabController;
   final List<Widget> _tabs = [
@@ -114,7 +114,7 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> with SingleTi
                   Text(user.scores.toString()),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 16),
               TabBar(
                 controller: _tabController,
                 tabs: _tabs,

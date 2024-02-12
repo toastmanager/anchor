@@ -18,7 +18,7 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateMixin {
-  final appBarHeight = kToolbarHeight + 11 + 48 + 1.5 + 11;
+  final appBarHeight = kToolbarHeight + 11 + 48 + 1.5 + 22;
   final EventService eventService = EventService();
   final _userService = UserService();
   final int _tabsLength = 3;
@@ -100,14 +100,14 @@ class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateM
                         Text(user.scores.toString()),
                       ],
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 16),
                     TabBar(
                       tabs: tabs,
                       controller: tabController,
                     ),
                   ],
                 )
-              )
+              ),
             ],
           ),
 
