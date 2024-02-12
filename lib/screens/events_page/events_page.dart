@@ -61,7 +61,7 @@ class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateM
           ),
           const SizedBox(
             height: 30,
-            child: Text('Завершено'),
+            child: Text('Завершено', softWrap: false,),
           ),
         ];
         
