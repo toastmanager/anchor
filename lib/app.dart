@@ -41,6 +41,10 @@ class _MainAppState extends State<MainApp> {
         ),
         fontFamily: 'Onest',
         textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+          ),
           displayMedium: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.w600

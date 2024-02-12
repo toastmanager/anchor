@@ -61,17 +61,32 @@ class _SignInPageState extends State<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Вход'),
+              Text(
+                'Вход',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 10),
-              const Text('Введите данные вашего аккаунта'),
+              Text(
+                'Введите данные вашего аккаунта',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant
+                ),
+              ),
               const SizedBox(height: 20),
-              const Text('Почта'),
+              Text(
+                'Почта',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 10),
               UniTextField(
                 controller: emailController,
                 hintText: 'Введите свою почту',
               ),
-              const Text('Пароль'),
+              const SizedBox(height: 10),
+              Text(
+                'Пароль',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 10),
               UniTextField(
                 controller: passwordController,

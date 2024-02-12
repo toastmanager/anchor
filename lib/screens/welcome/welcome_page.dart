@@ -24,9 +24,7 @@ class WelcomePage extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               'Добьёмся успехов вместе',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-              )
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             Text(
               "Прояви свои навыки вместе с нами!",
