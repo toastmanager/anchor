@@ -3,6 +3,7 @@ import 'package:anchor/models/my_event_model.dart';
 import 'package:anchor/utilities/event_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:unikit/unikit.dart';
 
@@ -17,6 +18,7 @@ class _EventAddingPapeState extends State<EventAddingPage> {
   final double appBarHeight = kToolbarHeight + 11;  
 
   //TODO: image adding ability
+  XFile? image;
 
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -24,12 +26,20 @@ class _EventAddingPapeState extends State<EventAddingPage> {
   final timeController = TextEditingController();
   final organizerController = TextEditingController();
   final costController = TextEditingController();
+  late final imagePathController;
+  final ImagePicker _picker = ImagePicker();
+
 
   late final List<UniTextField> textFields;
 
   @override
   void initState() {
     super.initState();
+
+    final imagePathController = TextEditingController(
+      text: image == null ? '' : image!.path.toString()
+    );
+
     textFields = [
       UniTextField(
         labelText: 'Название',
@@ -62,8 +72,15 @@ class _EventAddingPapeState extends State<EventAddingPage> {
       ),
       UniTextField(
         labelText: 'Изображение',
-        hintText: 'Укажите ответсвенного',
-        controller: organizerController,
+        hintText: 'Выберите изображение',
+        controller: imagePathController,
+        readOnly: true,
+        onTap: () async {
+          image = await _picker.pickImage(source: ImageSource.gallery);
+          setState(() {
+            imagePathController.text = image == null ? '' : image!.path.toString();
+          });
+        },
       ),
       UniTextField(
         labelText: 'Укажите вознаграждение',
@@ -82,14 +99,14 @@ class _EventAddingPapeState extends State<EventAddingPage> {
       organizer: organizerController.text.trim(),
       title: nameController.text.trim(),
       beginTime: Timestamp.fromDate(
-        DateFormat('HH:MM').parse(timeController.text.trim())
+        DateFormat('yyyy.MM.dd HH:MM').parse("${dateController.text.trim()} ${timeController.text.trim()}")
       ),
       cost: int.parse(costController.text.trim()),
       image: '',
       description: descriptionController.text.trim(),
       participants: const [],
     );
-    _eventService.createEvent(event);
+    _eventService.createEvent(event, image!);
     if (mounted) {
       Navigator.pop(context);
     }

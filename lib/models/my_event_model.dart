@@ -65,6 +65,28 @@ class MyEvent extends Equatable {
     );
   }
 
+  MyEvent copyWith({
+      String? uid,
+      String? title,
+      String? organizer,
+      Timestamp? beginTime,
+      int? cost,
+      String? description,
+      String? image,
+      List<dynamic>? participants,
+  }) {
+    return MyEvent(
+      uid: uid ?? this.uid,
+      title: title ?? this.title,
+      organizer: organizer ?? this.organizer,
+      beginTime: beginTime ?? this.beginTime,
+      cost: cost ?? this.cost,
+      image: image ?? this.image,
+      description: description ?? this.description,
+      participants: participants ?? this.participants,
+    );
+  }
+
   @override
   List<Object?> get props => [uid, title, beginTime, cost, image, description, participants];
 }

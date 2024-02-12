@@ -1,12 +1,16 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:anchor/entities/my_event_entity.dart';
 import 'package:anchor/models/my_event_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EventService {
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
+  final _storageRef = FirebaseStorage.instance.ref();
 
   late final CollectionReference _eventsRef;
 
@@ -55,10 +59,36 @@ class EventService {
     }
   }
 
-  Future<void> createEvent(MyEvent event) async {
+  Future<void> createEvent(MyEvent event, XFile image) async {
+    String? eventId;
+    bool isFilePutted = false;
+    bool eventCreated = false;
+    final fileName = image.path.split("/").last;
     try {
-      await _db.collection('events').add(MyEvent.toEntity(event).toDocumentWithoutUid());
+      eventId = _db.collection('events').doc().id;
+      
+      final uploadRef = _storageRef.child("events/uploads/$eventId/$fileName");
+      await uploadRef.putFile(File(image.path));
+      isFilePutted = true;
+      
+      event = event.copyWith(
+        uid: eventId,
+        image: await uploadRef.getDownloadURL()
+      );
+      await _db
+        .collection('events')
+        .doc(eventId)
+        .set(MyEvent.toEntity(event).toDocumentWithoutUid());
+      eventCreated = true;
     } catch (e) {
+      if (eventId != null) {
+        if (eventCreated) {
+          _db.collection('events').doc(eventId).delete();
+        }
+        if (isFilePutted) {
+          _storageRef.child("events/uploads/$eventId/$fileName").delete();
+        }
+      }
       log(e.toString());
       rethrow;
     }
