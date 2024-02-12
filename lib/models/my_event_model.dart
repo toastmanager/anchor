@@ -12,6 +12,7 @@ class MyEvent extends Equatable {
   final String description;
   final String image;
   final List<dynamic> participants;
+  final String? backgroundColor;
 
   const MyEvent({
     required this.uid,
@@ -22,6 +23,7 @@ class MyEvent extends Equatable {
     required this.image,
     required this.description,
     required this.participants,
+    this.backgroundColor,
   });
 
   static MyEvent empty = MyEvent(
@@ -33,6 +35,7 @@ class MyEvent extends Equatable {
     image: '',
     description: 'description',
     participants: const [],
+    backgroundColor: null,
   );
 
   bool get isEmpty => this == MyEvent.empty;
@@ -49,6 +52,7 @@ class MyEvent extends Equatable {
       image: event.image,
       description: event.description,
       participants: event.participants,
+      backgroundColor: event.backgroundColor,
     );
   }
 
@@ -62,6 +66,7 @@ class MyEvent extends Equatable {
       image: entity.image,
       description: entity.description,
       participants: entity.participants,
+      backgroundColor: entity.backgroundColor,
     );
   }
 
@@ -74,6 +79,7 @@ class MyEvent extends Equatable {
       String? description,
       String? image,
       List<dynamic>? participants,
+      String? backgroundColor,
   }) {
     return MyEvent(
       uid: uid ?? this.uid,
@@ -84,6 +90,7 @@ class MyEvent extends Equatable {
       image: image ?? this.image,
       description: description ?? this.description,
       participants: participants ?? this.participants,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
     );
   }
 

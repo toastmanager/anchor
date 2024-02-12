@@ -19,6 +19,7 @@ class EventCard extends StatefulWidget {
     required this.cost,
     required this.imageURL,
     required this.organizer,
+    this.backgroundColor,
   }) : super(key: key);
 
   final String uid;
@@ -29,6 +30,7 @@ class EventCard extends StatefulWidget {
   final String imageURL;
   final bool? isUserParticipate;
   final MyUser? organizer;
+  final String? backgroundColor;
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -76,6 +78,11 @@ class _EventCardState extends State<EventCard> {
         ? CachedNetworkImageProvider(widget.organizer!.picture!)
         : const AssetImage('assets/images/default_avatar.png') as ImageProvider<Object>;
     
+    Color _backgroundColor = 
+      widget.backgroundColor == '' || widget.backgroundColor == null
+      ? Theme.of(context).colorScheme.primary
+      : Color(int.parse("0xFF${widget.backgroundColor!}"));
+
     return AnimatedSize(
       duration: const Duration(milliseconds: 500),
       reverseDuration: const Duration(milliseconds: 500),
@@ -108,8 +115,8 @@ class _EventCardState extends State<EventCard> {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.primary.withAlpha(100),
+                      _backgroundColor,
+                      _backgroundColor.withAlpha(100),
                     ],
                   ),
                 ),

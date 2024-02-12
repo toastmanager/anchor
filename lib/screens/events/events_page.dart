@@ -157,6 +157,7 @@ class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateM
                         cost: event.cost,
                         organizer: organizer.data,
                         imageURL: event.image,
+                        backgroundColor: event.backgroundColor,
                       );
                     }
                   );

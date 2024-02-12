@@ -10,6 +10,7 @@ class MyEventEntity extends Equatable {
   final String description;
   final String image;
   final List<dynamic> participants;
+  final String? backgroundColor;
 
   const MyEventEntity({
     required this.uid,
@@ -20,6 +21,7 @@ class MyEventEntity extends Equatable {
     required this.image,
     required this.description,
     required this.participants,
+    this.backgroundColor,
   });
 
   Map<String, Object?> toDocument() {
@@ -32,6 +34,7 @@ class MyEventEntity extends Equatable {
       "image": image,
       "description": description,
       "participants": participants,
+      "backgroundColor": backgroundColor,
     };
   }
   Map<String, Object?> toDocumentWithoutUid() {
@@ -43,6 +46,7 @@ class MyEventEntity extends Equatable {
       "image": image,
       "description": description,
       "participants": participants,
+      "backgroundColor": backgroundColor,
     };
   }
 
@@ -56,6 +60,7 @@ class MyEventEntity extends Equatable {
       image: doc["image"] as String,
       description: doc["description"] as String,
       participants: doc["participants"] as List<dynamic>,
+      backgroundColor: doc['backgroundColor'] as String?,
     );
   }
 
