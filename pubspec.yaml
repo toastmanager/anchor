@@ -46,6 +46,7 @@ flutter:
   assets:
     - assets/images/anchor_logo.png
     - assets/images/default_avatar.png
+    - assets/images/welcome_illustration.svg
 
   fonts:
     - family: Onest

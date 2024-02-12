@@ -73,48 +73,70 @@ class _RatingPageState extends State<RatingPage> {
             
                 final snapshotData = snapshot.data!.docs;
             
-                return ListView.separated(
-                  itemCount: snapshotData.length,
-                  separatorBuilder: (_, index) => const SizedBox(height: 5),
-                  itemBuilder: (context, index) => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 10,
-                            child: Text(
-                              (index + 1).toString(),
-                              textAlign: TextAlign.center,
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant
+                    )
+                  ),
+                  child: ListView.builder(
+                    itemCount: snapshotData.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            )
+                          )
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                  child: Text(
+                                    (index + 1).toString(),
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: Theme.of(context).colorScheme.primary
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                UserAvatar(
+                                  imageURL: snapshotData[index]['picture'],
+                                  size: 36
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  surnameName(snapshotData[index]['fullname']),
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: snapshotData[index].id == user.uid
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Theme.of(context).colorScheme.onBackground
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              snapshotData[index]['earnedScores'].toString(),
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Theme.of(context).colorScheme.primary
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 10),
-                          UserAvatar(
-                            imageURL: snapshotData[index]['picture'],
-                            size: 36
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            surnameName(snapshotData[index]['fullname']),
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: snapshotData[index].id == user.uid
-                                ? Theme.of(context).colorScheme.primary
-                                : Theme.of(context).colorScheme.onBackground
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        snapshotData[index]['earnedScores'].toString(),
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.primary
+                          ],
                         ),
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 );
               },

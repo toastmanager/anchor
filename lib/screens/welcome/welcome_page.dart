@@ -1,6 +1,7 @@
 import 'package:anchor/screens/welcome/sign_in_page.dart';
 import 'package:anchor/screens/welcome/sign_up_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:unikit/unikit.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -13,7 +14,28 @@ class WelcomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SvgPicture.asset(
+              'assets/images/welcome_illustration.svg',
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width - 32,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Добьёмся успехов вместе',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+              )
+            ),
+            Text(
+              "Прояви свои навыки вместе с нами!",
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontSize: 14
+              ),
+            ),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(child: UniButtonAccentMedium(
@@ -37,7 +59,7 @@ class WelcomePage extends StatelessWidget {
                     width: 1.5,
                   ),
                   onPressed: () => Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => SignUpPageStepOne(),
+                    builder: (context) => const SignUpPageStepOne(),
                   )),
                 )),
               ],
