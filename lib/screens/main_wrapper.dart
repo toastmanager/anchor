@@ -1,5 +1,6 @@
 import 'package:anchor/screens/events/events_page.dart';
 import 'package:anchor/screens/leaders_page.dart';
+import 'package:anchor/screens/news/news_page.dart';
 import 'package:anchor/screens/personal_account/personal_account_page.dart';
 import 'package:anchor/screens/products_page.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _MainWrapperState extends State<MainWrapper> {
 
   int pageIndex = 0;
   final List<Widget> pagesList = <Widget>[
+    const NewsPage(),
     const LeadersPage(),
     const ProductsPage(),
     const EventsPage(),
@@ -30,6 +32,7 @@ class _MainWrapperState extends State<MainWrapper> {
   ];
 
   final List<IconData> unselectedIcons = [
+    IconlyLight.discovery,
     IconlyLight.chart,
     IconlyLight.buy,
     IconlyLight.star,
@@ -37,6 +40,7 @@ class _MainWrapperState extends State<MainWrapper> {
   ];
 
   final List<IconData> selectedIcons = [
+    IconlyBold.discovery,
     IconlyBold.chart,
     IconlyBold.buy,
     IconlyBold.star,
@@ -56,18 +60,22 @@ class _MainWrapperState extends State<MainWrapper> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(icons[0]),
-            label: 'Leaders',
+            label: 'News',
           ),
           BottomNavigationBarItem(
             icon: Icon(icons[1]),
-            label: 'Products',
+            label: 'Leaders',
           ),
           BottomNavigationBarItem(
             icon: Icon(icons[2]),
-            label: 'Events',
+            label: 'Products',
           ),
           BottomNavigationBarItem(
             icon: Icon(icons[3]),
+            label: 'Events',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(icons[4]),
             label: 'Profile',
           ),
         ],
