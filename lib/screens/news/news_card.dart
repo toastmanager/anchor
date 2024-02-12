@@ -15,6 +15,7 @@ class NewsCard extends StatefulWidget {
     required this.likesAmount,
     required this.createdAt,
     required this.description,
+    required this.onLike,
     this.imageURL,
   });
 
@@ -24,13 +25,13 @@ class NewsCard extends StatefulWidget {
   final Timestamp createdAt;
   final String description;
   final String? imageURL;
+  final Function(bool) onLike;
 
   @override
   State<NewsCard> createState() => _NewsState();
 }
 
 class _NewsState extends State<NewsCard> {
-
   @override
   Widget build(BuildContext context) {
     final author = widget.author;
@@ -67,6 +68,7 @@ class _NewsState extends State<NewsCard> {
                 postBottomButton(
                   widget.isLiked ? IconlyBold.heart : IconlyLight.heart,
                   widget.likesAmount.toString(),
+                  () => widget.onLike(widget.isLiked),
                   // ignore: unnecessary_null_comparison
                   iconColor: widget.isLiked == null ? null : Theme.of(context).colorScheme.primary,
                 ),
@@ -83,9 +85,16 @@ class _NewsState extends State<NewsCard> {
     );
   }
 
-  Widget postBottomButton(IconData icon, String text, {Color? iconColor}) {
+  Widget postBottomButton(
+    IconData icon,
+    String text,
+    Function action,
+    {
+      Color? iconColor,
+    }
+  ) {
     return InkWell(
-      onTap: () {},
+      onTap: () => action(),
       child: Row(
         children: [
           Icon(

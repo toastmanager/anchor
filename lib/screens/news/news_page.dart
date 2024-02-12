@@ -19,62 +19,87 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _newsService.getNews(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+    return FutureBuilder(
+      future: _userService.getCurrentUser(),
+      builder: (context, userSnapshot) {
+        if (!userSnapshot.hasData) {
+          if (userSnapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
           return const Center(
-            child: Text('Список пуст'),
+            child: Text('Пользователь отсутствует'),
           );
         }
-    
-        List newsList = snapshot.data?.docs ?? [];
-    
-        return Scaffold(
-          appBar: const UniAppBar(
-            centerTitle: true,
-            height: kToolbarHeight + 11,
-            title: 'Новости',
-          ),
-          body: Container(
-            color: Theme.of(context).colorScheme.surface,
-            child: ListView.separated(
-              itemCount: newsList.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
-              itemBuilder: (context, index) {
-                News newsItem = newsList[index].data();
-                return FutureBuilder(
-                  future: _userService.getUserByUid(newsItem.author),
-                  builder: (context, authorSnapshot) {
-                    if (!authorSnapshot.hasData) {
-                      if (authorSnapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      return const Center(
-                        child: Text('Пользователь отсутствует'),
-                      );
-                    }
-            
-                    MyUser author = authorSnapshot.data!;
-            
-                    return NewsCard(
-                      author: author,
-                      isLiked: false,
-                      likesAmount: newsItem.likes.length,
-                      createdAt: newsItem.createdAt,
-                      description: newsItem.description,
-                      imageURL: newsItem.imageURL,
-                    );
-                  },
-                );
+
+        MyUser user = userSnapshot.data!;
+
+        return StreamBuilder(
+          stream: _newsService.getNews(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
               }
-            ),
-          ),
+              return const Center(
+                child: Text('Список пуст'),
+              );
+            }
+        
+            List newsList = snapshot.data?.docs ?? [];
+        
+            return Scaffold(
+              appBar: const UniAppBar(
+                centerTitle: true,
+                height: kToolbarHeight + 11,
+                title: 'Новости',
+              ),
+              body: Container(
+                color: Theme.of(context).colorScheme.surface,
+                child: ListView.separated(
+                  itemCount: newsList.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 16),
+                  itemBuilder: (context, index) {
+                    News newsItem = newsList[index].data();
+                    return FutureBuilder(
+                      future: _userService.getUserByUid(newsItem.author),
+                      builder: (context, authorSnapshot) {
+                        if (!authorSnapshot.hasData) {
+                          if (authorSnapshot.connectionState == ConnectionState.waiting) {
+                            return const Center(child: CircularProgressIndicator());
+                          }
+                          return const Center(
+                            child: Text('Автор отсутствует'),
+                          );
+                        }
+                
+                        MyUser author = authorSnapshot.data!;
+                
+                        return NewsCard(
+                          author: author,
+                          isLiked: newsItem.likes.contains(user.uid),
+                          likesAmount: newsItem.likes.length,
+                          createdAt: newsItem.createdAt,
+                          description: newsItem.description,
+                          imageURL: newsItem.imageURL,
+                          onLike: (_) async {
+                            if (newsItem.likes.contains(user.uid)) {
+                              await _newsService.unSetLike(newsItem.uid);
+                              setState(() {});
+                            } else {
+                              await _newsService.setLike(newsItem.uid);
+                              setState(() {});
+                            }
+                          },
+                        );
+                      },
+                    );
+                  }
+                ),
+              ),
+            );
+          },
         );
-      },
+      }
     );
   }
 }
