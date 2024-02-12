@@ -69,23 +69,50 @@ class _SignUpPageStepOneState extends State<SignUpPageStepOne> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Регистрация'),
+              Text(
+                'Регистрация',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w700
+                ),
+              ),
               const SizedBox(height: 10),
-              const Text('Введите свою личную информацию'),
+              Text(
+                'Введите свою личную информацию',
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant
+                ),
+              ),
               const SizedBox(height: 20),
-              const Text('Почта'),
+              Text(
+                'Почта',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700
+                ),
+              ),
               const SizedBox(height: 10),
               UniTextField(
                 controller: emailController,
                 hintText: 'Введите свою почту',
               ),
-              const Text('ФИО'),
+              const SizedBox(height: 10),
+              Text(
+                'ФИО',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700
+                ),
+              ),
               const SizedBox(height: 10),
               UniTextField(
                 controller: fullnameController,
                 hintText: 'Введите ваше ФИО',
               ),
-              const Text('Дата рождения'),
+              const SizedBox(height: 10),
+              Text(
+                'Дата рождения',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700
+                ),
+              ),
               const SizedBox(height: 10),
               UniTextField(
                 controller: birthDateController,
@@ -93,8 +120,13 @@ class _SignUpPageStepOneState extends State<SignUpPageStepOne> {
                 keyboardType: TextInputType.datetime,
                 inputFormatters: [dateInputMask],
               ),
-              const Text('Пароль'),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
+              Text(
+                'Пароль',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w700
+                ),
+              ),
               const SizedBox(height: 10),
               UniTextField(
                 controller: passwordController,
