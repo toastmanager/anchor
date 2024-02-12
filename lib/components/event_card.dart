@@ -213,7 +213,7 @@ class _EventCardState extends State<EventCard> {
           width: 90,
           backgroundColor: Theme.of(context).colorScheme.background,
           foregroundColor: Theme.of(context).colorScheme.primary,
-          onPressed: () => signAction(),
+          onPressed: widget.beginTime.toDate().isAfter(DateTime.now()) ? () => signAction() : null,
         ),
       ],
     );
