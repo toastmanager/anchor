@@ -1,5 +1,6 @@
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/screens/personal_account/profile_screen.dart';
+import 'package:anchor/screens/personal_account/schedule_screen.dart';
 import 'package:anchor/utilities/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -23,17 +24,29 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> with SingleTi
     const SizedBox(
       width: 85,
       height: 30,
-      child: Text('Расписание', softWrap: false)
+      child: Text(
+        'Расписание',
+        softWrap: false,
+        textAlign: TextAlign.center,
+      )
     ),
     const SizedBox(
       width: 100,
       height: 30,
-      child: Text('Мероприятия', softWrap: false)
+      child: Text(
+        'Мероприятия',
+        softWrap: false,
+        textAlign: TextAlign.center
+      )
     ),
     const SizedBox(
       width: 62,
       height: 30,
-      child: Text('Профиль', softWrap: false)
+      child: Text(
+        'Профиль',
+        softWrap: false,
+        textAlign: TextAlign.center
+      )
     ),
   ];
 
@@ -67,16 +80,11 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> with SingleTi
         MyUser user = snapshot.data!;
 
         final screens = <Widget>[
-          ProfileScreen(
+          SizedBox(
             height: MediaQuery.of(context).size.height - appBarHeight - 85,
-            user: user,
-            userService: userService,
+            child: const ScheduleScreen()
           ),
-          ProfileScreen(
-            height: MediaQuery.of(context).size.height - appBarHeight - 85,
-            user: user,
-            userService: userService,
-          ),
+          const Placeholder(),
           ProfileScreen(
             height: MediaQuery.of(context).size.height - appBarHeight - 85,
             user: user,

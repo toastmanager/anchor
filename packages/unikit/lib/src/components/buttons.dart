@@ -120,12 +120,16 @@ class UniButtonSecondarySmall extends StatelessWidget {
     this.onPressed,
     this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
     this.shadowColor = Colors.transparent,
+    this.backgroundColor,
+    this.foregroundColor,
   });
 
   final String text;
   final Function()? onPressed;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   final Color shadowColor;
   final EdgeInsets padding;
 
@@ -138,6 +142,8 @@ class UniButtonSecondarySmall extends StatelessWidget {
       onPressed: onPressed,
       textStyle: Theme.of(context).textTheme.labelSmall,
       shadowColor: shadowColor,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
       borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
       padding: padding,
     );
@@ -205,6 +211,8 @@ class UniButtonSecondary extends StatelessWidget {
     this.onPressed,
     this.padding = const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
     this.shadowColor = Colors.transparent,
+    this.backgroundColor,
+    this.foregroundColor,
     this.borderSide = BorderSide.none,
   });
 
@@ -215,17 +223,22 @@ class UniButtonSecondary extends StatelessWidget {
   final TextStyle? textStyle;
   final BorderSide borderSide;
   final Color shadowColor;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
   final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
+    Color buttonBackgroundColor = backgroundColor ?? Theme.of(context).colorScheme.surface;
+    Color buttonForegroundColor = foregroundColor ?? Theme.of(context).colorScheme.primary;
+
     return UniElevatedButton(
       text: text, 
       textStyle: textStyle,
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      foregroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: buttonBackgroundColor,
+      foregroundColor: buttonForegroundColor,
       borderSide: borderSide,
       padding: padding,
       shadowColor: shadowColor,
