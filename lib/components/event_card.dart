@@ -165,7 +165,7 @@ class _EventCardState extends State<EventCard> {
                                       image: organizerImage,
                                       height: 40,
                                       width: 40,
-                                      fit: BoxFit.fill,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                   const SizedBox(width: 10),

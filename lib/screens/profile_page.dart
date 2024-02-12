@@ -1,7 +1,10 @@
+import 'package:anchor/components/strings.dart';
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/screens/welcome_page/welcome_page.dart';
 import 'package:anchor/utilities/user_service.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:unikit/unikit.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -31,9 +34,9 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
   }
 
 
+
   @override
   Widget build(BuildContext context) {
-
     final List<Widget> tabsList = <Widget>[
       FutureBuilder(
         future: user,
@@ -61,18 +64,29 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           var emailController = TextEditingController(
             text: user?.email,
           );
+          var birthDateController = TextEditingController(
+            text: DateFormat('yyyy.MM.dd').format(user!.birthDate.toDate())
+          );
+
+          ImageProvider<Object> userImage = user.picture != null
+                ? CachedNetworkImageProvider(user.picture!)
+                : const AssetImage('assets/images/default_avatar.png') as ImageProvider<Object>;
 
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextButton(
-                    child: Text(
-                      'Выйти',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: Theme.of(context).colorScheme.error,
+                    child: SizedBox(
+                      width: 100,
+                      child: Text(
+                        'Выйти',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
                       ),
                     ),
                     onPressed: () async {
@@ -84,9 +98,20 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                       }
                     },
                   ),
+                  ClipOval(
+                    child: Image(
+                      image: userImage,
+                      height: 74,
+                      width: 74,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   TextButton(
-                    child: const Text(
-                      'Редактировать',
+                    child: const SizedBox(
+                      width: 105,
+                      child: Text(
+                        'Редактировать',
+                      ),
                     ),
                     onPressed: () {},
                   ),
@@ -97,13 +122,21 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                   UniTextField(
                     controller: fullnameController,
                     labelText: 'ФИО',
-                    enabled: false,
+                    readOnly: true,
                   ),
                   const SizedBox(height: 20),
                   UniTextField(
                     controller: emailController,
                     labelText: 'Почта',
-                    enabled: false,
+                    readOnly: true,
+                  ),
+                  const SizedBox(height: 20),
+                  UniTextField(
+                    controller: birthDateController,
+                    labelText: 'Дата рождения',
+                    readOnly: true,
+                    keyboardType: TextInputType.datetime,
+                    inputFormatters: [dateMask],
                   ),
                 ],
               ),

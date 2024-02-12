@@ -23,6 +23,7 @@ class _EventsPageState extends State<EventsPage> {
       appBar: UniAppBar(
         centerTitle: true,
         height: appBarHeight,
+        title: 'Мероприятия',
       ),
       body: StreamBuilder(
         stream: eventService.getEvents(),

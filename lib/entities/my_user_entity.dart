@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class MyUserEntity extends Equatable {
@@ -6,6 +7,7 @@ class MyUserEntity extends Equatable {
   final String role;
   final String fullname;
   final String? picture;
+  final Timestamp birthDate;
   final int scores;
   final int earnedScores;
 
@@ -15,6 +17,7 @@ class MyUserEntity extends Equatable {
     required this.role,
     required this.fullname,
     required this.picture,
+    required this.birthDate,
     required this.scores,
     required this.earnedScores,
   });
@@ -24,6 +27,7 @@ class MyUserEntity extends Equatable {
       "uid": uid,
       "email": email,
       "fullname": fullname,
+      "birthDate": birthDate,
       "picture": picture,
       "scores": scores,
       "earnedScores": earnedScores,
@@ -35,6 +39,7 @@ class MyUserEntity extends Equatable {
       uid: doc['uid'] as String,
       email: doc['email'] as String,
       role: doc['role'] as String,
+      birthDate: doc['birthDate'] as Timestamp,
       fullname: doc['fullname'] as String,
       picture: doc['picture'] as String?,
       scores: doc['scores'] as int,
@@ -43,5 +48,5 @@ class MyUserEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [uid, email, fullname, picture];
+  List<Object?> get props => [uid, email, role, fullname, picture, birthDate, scores, earnedScores];
 }

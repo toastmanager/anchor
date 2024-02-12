@@ -26,6 +26,7 @@ class UserService {
         role: userData['role'] as String,
         fullname: userData['fullname'] as String,
         picture: userData['picture'] as String?,
+        birthDate: userData['birthDate'] as Timestamp,
         scores: userData['scores'] as int,
         earnedScores: userData['earnedScores'] as int,
       );
@@ -50,6 +51,7 @@ class UserService {
         role: userData['role'] as String,
         fullname: userData['fullname'] as String,
         picture: userData['picture'] as String?,
+        birthDate: userData['birthDate'] as Timestamp,
         scores: userData['scores'] as int,
         earnedScores: userData['earnedScores'] as int,
       );
@@ -77,7 +79,7 @@ class UserService {
     }
   }
 
-  Future<void> signUp(String email, String password, String fullname) async {
+  Future<void> signUp(String email, String password, String fullname, Timestamp birthDate) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       try {
@@ -88,6 +90,7 @@ class UserService {
             'role': "regular",
             'fullname': fullname,
             'picture': null,
+            'birthDate': birthDate,
             'scores': 0,
             'earnedScores': 0,
           });

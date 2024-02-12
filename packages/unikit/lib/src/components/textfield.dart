@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class UniTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hintText;
   final bool obscureText;
   final bool enabled;
+  final bool readOnly;
   final TextInputType? keyboardType;
   final Widget? suffixIcon;
   final VoidCallback? onTap;
@@ -15,6 +17,7 @@ class UniTextField extends StatelessWidget {
   final String? labelText;
   final void Function(String?)? onSaved;
   final String? Function(String?)? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
 
   const UniTextField({
     super.key,
@@ -22,6 +25,7 @@ class UniTextField extends StatelessWidget {
     this.hintText,
     this.obscureText = false,
     this.enabled = true,
+    this.readOnly = false,
     this.keyboardType,
     this.suffixIcon,
     this.onTap,
@@ -32,6 +36,7 @@ class UniTextField extends StatelessWidget {
     this.labelText,
     this.onSaved,
     this.onChanged,
+    this.inputFormatters,
   });
 
 
@@ -53,6 +58,8 @@ class UniTextField extends StatelessWidget {
       focusNode: focusNode, 
       textInputAction: TextInputAction.next,
       onChanged: onChanged,
+      readOnly: readOnly,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         prefixIconColor: iconColor,
