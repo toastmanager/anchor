@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:anchor/components/user_avatar.dart';
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/utilities/event_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -74,10 +75,6 @@ class _EventCardState extends State<EventCard> {
     }
 
     ImageProvider<Object> backgroundImage = CachedNetworkImageProvider(widget.imageURL);
-    ImageProvider<Object> organizerImage = widget.organizer?.picture != null
-        ? CachedNetworkImageProvider(widget.organizer!.picture!)
-        : const AssetImage('assets/images/default_avatar.png') as ImageProvider<Object>;
-    
     Color _backgroundColor = 
       widget.backgroundColor == '' || widget.backgroundColor == null
       ? Theme.of(context).colorScheme.primary
@@ -168,13 +165,9 @@ class _EventCardState extends State<EventCard> {
                             children: [
                               Row(
                                 children: [
-                                  ClipOval(
-                                    child: Image(
-                                      image: organizerImage,
-                                      height: 40,
-                                      width: 40,
-                                      fit: BoxFit.cover,
-                                    ),
+                                  UserAvatar(
+                                    user: widget.organizer,
+                                    size: 40
                                   ),
                                   const SizedBox(width: 10),
                                   Text(

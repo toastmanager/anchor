@@ -1,8 +1,8 @@
 import 'package:anchor/components/strings.dart';
+import 'package:anchor/components/user_avatar.dart';
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/screens/welcome/welcome_page.dart';
 import 'package:anchor/utilities/user_service.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:unikit/unikit.dart';
@@ -47,10 +47,6 @@ class _ProfileScreenState extends State<ProfileScreen>
         text: DateFormat('yyyy.MM.dd')
             .format(user!.birthDate.toDate()));
 
-    ImageProvider<Object> userImage = user?.picture != null
-        ? CachedNetworkImageProvider(user!.picture!)
-        : const AssetImage('assets/images/default_avatar.png') as ImageProvider<Object>;
-
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
@@ -86,13 +82,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                     }
                   },
                 ),
-                ClipOval(
-                  child: Image(
-                    image: userImage,
-                    height: 74,
-                    width: 74,
-                    fit: BoxFit.cover,
-                  ),
+                UserAvatar(
+                  user: user,
+                  size: 74,
                 ),
                 TextButton(
                   child: const SizedBox(
