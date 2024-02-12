@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
 import 'package:unikit/unikit.dart';
 
 class EventCard extends StatefulWidget {
@@ -127,8 +128,8 @@ class _EventCardState extends State<EventCard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _bottomInfo(context, IconlyLight.calendar, "${widget.beginTime.toDate().day}.${widget.beginTime.toDate().month}"),
-                        _bottomInfo(context, IconlyLight.time_circle, "${widget.beginTime.toDate().hour}:${widget.beginTime.toDate().minute}"),
+                        _bottomInfo(context, IconlyLight.calendar, DateFormat('d MMMM', "ru").format(widget.beginTime.toDate())),
+                        _bottomInfo(context, IconlyLight.time_circle, DateFormat('HH:MM', "ru").format(widget.beginTime.toDate())),
                         _bottomInfo(context, IconlyLight.wallet, "${widget.cost}"),
                       ],
                     ),

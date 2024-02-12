@@ -92,7 +92,7 @@ class _SignUpPageStepOneState extends State<SignUpPageStepOne> {
                 controller: birthDateController,
                 hintText: '1960.01.01',
                 keyboardType: TextInputType.datetime,
-                inputFormatters: [dateMask],
+                inputFormatters: [dateInputMask],
               ),
               const Text('Пароль'),
               const SizedBox(height: 10),

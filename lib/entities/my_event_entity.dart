@@ -34,6 +34,17 @@ class MyEventEntity extends Equatable {
       "participants": participants,
     };
   }
+  Map<String, Object?> toDocumentWithoutUid() {
+    return {
+      "title": title,
+      "organizer": organizer,
+      "beginTime": beginTime,
+      "cost": cost,
+      "image": image,
+      "description": description,
+      "participants": participants,
+    };
+  }
 
   static MyEventEntity fromDocument(Map<String, Object?> doc, String uid) {
     return MyEventEntity(

@@ -136,7 +136,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                     labelText: 'Дата рождения',
                     readOnly: true,
                     keyboardType: TextInputType.datetime,
-                    inputFormatters: [dateMask],
+                    inputFormatters: [dateInputMask],
                   ),
                 ],
               ),

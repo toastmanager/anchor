@@ -23,6 +23,15 @@ class EventService {
       );
   }
 
+  Stream<QuerySnapshot> getFutureEvents() {
+    try {
+      return _eventsRef.where('beginTime', isGreaterThan: DateTime.now()).snapshots();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
   Stream<QuerySnapshot> getEvents() {
     try {
       return _eventsRef.snapshots();
@@ -40,6 +49,15 @@ class EventService {
       MyEvent eventData = eventSnapshot.data() as MyEvent;
 
       return eventData.participants.contains(currentUser?.uid);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  Future<void> createEvent(MyEvent event) async {
+    try {
+      await _db.collection('events').add(MyEvent.toEntity(event).toDocumentWithoutUid());
     } catch (e) {
       log(e.toString());
       rethrow;

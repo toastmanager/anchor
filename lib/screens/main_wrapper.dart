@@ -5,6 +5,7 @@ import 'package:anchor/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:unikit/unikit.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});
@@ -14,6 +15,12 @@ class MainWrapper extends StatefulWidget {
 }
 
 class _MainWrapperState extends State<MainWrapper> {
+  @override
+  void initState() {
+    super.initState();
+    initializeDateFormatting();
+  }
+
   int pageIndex = 0;
   final List<Widget> pagesList = <Widget>[
     LeadersPage(),
