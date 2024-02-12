@@ -1,3 +1,4 @@
+import 'package:anchor/components/user_avatar.dart';
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/utilities/user_service.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,10 @@ class _LeadersPageState extends State<LeadersPage> {
                       Row(
                         children: [
                           Text("${index.toString()}. "),
+                          UserAvatar(
+                            imageURL: snapshotData[index]['picture'],
+                            size: 40
+                          ),
                           Text(snapshotData[index]['fullname']),
                         ],
                       ),

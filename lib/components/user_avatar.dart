@@ -1,21 +1,20 @@
-import 'package:anchor/models/my_user_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class UserAvatar extends StatelessWidget {
   const UserAvatar({
     super.key,
-    required this.user,
+    required this.imageURL,
     required this.size,
   });
 
-  final MyUser? user;
+  final String? imageURL;
   final double size;
 
   @override
   Widget build(BuildContext context) {
-    ImageProvider<Object> userImage = user?.picture != null
-          ? CachedNetworkImageProvider(user!.picture!)
+    ImageProvider<Object> userImage = imageURL != null
+          ? CachedNetworkImageProvider(imageURL!)
           : const AssetImage('assets/images/default_avatar.png') as ImageProvider<Object>;
 
     return ClipOval(

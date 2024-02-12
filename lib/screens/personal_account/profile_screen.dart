@@ -83,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   },
                 ),
                 UserAvatar(
-                  user: user,
+                  imageURL: user?.picture,
                   size: 74,
                 ),
                 TextButton(

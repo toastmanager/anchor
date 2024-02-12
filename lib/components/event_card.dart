@@ -166,7 +166,7 @@ class _EventCardState extends State<EventCard> {
                               Row(
                                 children: [
                                   UserAvatar(
-                                    user: widget.organizer,
+                                    imageURL: widget.organizer?.picture,
                                     size: 40
                                   ),
                                   const SizedBox(width: 10),
