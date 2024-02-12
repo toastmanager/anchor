@@ -181,26 +181,7 @@ class _EventCardState extends State<EventCard> {
                                   )
                                 ],
                               ),
-                              Column(
-                                children: [
-                                  UniButtonAccentSmall(
-                                    text: 'Информация',
-                                    height: 20,
-                                    width: 90,
-                                    backgroundColor: Theme.of(context).colorScheme.background,
-                                    foregroundColor: Theme.of(context).colorScheme.primary,
-                                    onPressed: () => switchDescription(),
-                                  ),
-                                  UniButtonAccentSmall(
-                                    text: signText,
-                                    height: 20,
-                                    width: 90,
-                                    backgroundColor: Theme.of(context).colorScheme.background,
-                                    foregroundColor: Theme.of(context).colorScheme.primary,
-                                    onPressed: () => signAction(),
-                                  ),
-                                ],
-                              ),
+                              actions(context, signText, signAction),
                             ],
                           ),
                         ],
@@ -212,6 +193,29 @@ class _EventCardState extends State<EventCard> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget actions(BuildContext context, String signText, Function signAction) {
+    return Column(
+      children: [
+        UniButtonAccentSmall(
+          text: 'Информация',
+          height: 20,
+          width: 90,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          onPressed: () => switchDescription(),
+        ),
+        UniButtonAccentSmall(
+          text: signText,
+          height: 20,
+          width: 90,
+          backgroundColor: Theme.of(context).colorScheme.background,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          onPressed: () => signAction(),
+        ),
+      ],
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:anchor/screens/events_page.dart';
+import 'package:anchor/screens/events_page/events_page.dart';
 import 'package:anchor/screens/leaders_page.dart';
 import 'package:anchor/screens/products_page.dart';
 import 'package:anchor/screens/profile_page.dart';

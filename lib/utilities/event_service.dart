@@ -36,6 +36,30 @@ class EventService {
     }
   }
 
+  Stream<QuerySnapshot> getCurrentUserCompletedEvents() {
+    try {
+      return _eventsRef
+        .where('participants', arrayContains: _auth.currentUser?.uid)
+        .where('beginTime', isLessThan: DateTime.now())
+        .snapshots();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  Stream<QuerySnapshot> getCurrentUserChoosedEvents() {
+    try {
+      return _eventsRef
+        .where('participants', arrayContains: _auth.currentUser?.uid)
+        .where('beginTime', isGreaterThan: DateTime.now())
+        .snapshots();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
   Stream<QuerySnapshot> getEvents() {
     try {
       return _eventsRef.snapshots();
