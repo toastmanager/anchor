@@ -1,8 +1,10 @@
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/models/news_model.dart';
 import 'package:anchor/screens/news/news_card.dart';
+import 'package:anchor/screens/news/news_create_page.dart';
 import 'package:anchor/utilities/news_service.dart';
 import 'package:anchor/utilities/user_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:unikit/unikit.dart';
 
@@ -48,10 +50,19 @@ class _NewsPageState extends State<NewsPage> {
             List newsList = snapshot.data?.docs ?? [];
         
             return Scaffold(
-              appBar: const UniAppBar(
+              appBar: UniAppBar(
                 centerTitle: true,
                 height: kToolbarHeight + 11,
                 title: 'Новости',
+                actions: [
+                  if (user.role == 'moderator')
+                    IconButton(
+                      icon: const Icon(CupertinoIcons.add),
+                      onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => const NewsCreatePage(),
+                      )),
+                    ),
+                ],
               ),
               body: Container(
                 color: Theme.of(context).colorScheme.surface,

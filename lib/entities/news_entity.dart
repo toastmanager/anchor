@@ -34,7 +34,7 @@ class NewsEntity extends Equatable {
 
   Map<String, Object?> toDocumentWithoutUid() {
     return {
-      "author": description,
+      "author": author,
       "description": description,
       "createdAt": createdAt,
       "imageURL": imageURL,
