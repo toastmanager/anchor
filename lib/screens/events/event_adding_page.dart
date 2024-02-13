@@ -1,6 +1,7 @@
 import 'package:anchor/components/strings.dart';
 import 'package:anchor/models/my_event_model.dart';
 import 'package:anchor/utilities/event_service.dart';
+import 'package:anchor/utilities/user_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,7 +16,8 @@ class EventAddingPage extends StatefulWidget {
 }
 
 class _EventAddingPapeState extends State<EventAddingPage> {
-  final double appBarHeight = kToolbarHeight + 11;  
+  final UserService _userService = UserService();
+  final double appBarHeight = kToolbarHeight + 11;
 
   XFile? image;
 
@@ -68,6 +70,56 @@ class _EventAddingPapeState extends State<EventAddingPage> {
         labelText: 'Ответственный',
         hintText: 'Укажите ответсвенного',
         controller: organizerController,
+        readOnly: true,
+        onTap: () async {
+          await showDialog(
+            context: context,
+            builder: (context) {
+              return StreamBuilder(
+                stream: _userService.getModerators(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return const Center(
+                      child: Text('Список модераторов пуст'),
+                    );
+                  }
+
+                  List moderators = snapshot.data?.docs ?? [];
+
+                  return Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.background,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      height: 350,
+                      width: 300,
+                      child: ListView.separated(
+                        itemCount: moderators.length,
+                        separatorBuilder: (context, index) => const SizedBox(height: 8), 
+                        itemBuilder: (context, index) {
+                          Map<String, dynamic> moderator = moderators[index].data();
+                          return TextButton(
+                            onPressed: () {
+                              organizerController.text = moderators[index].id;
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              moderator['fullname'] as String,
+                            )
+                          );
+                        }, 
+                      )
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
       ),
       UniTextField(
         labelText: 'Изображение',
