@@ -40,7 +40,7 @@ class _SignInPageState extends State<SignInPage> {
     } catch (e) {
       log(e.toString());
       if (mounted) {
-        simpleAlert(e.toString(), context);
+        simpleTextAlert(e.toString(), context);
       }
     }
   }

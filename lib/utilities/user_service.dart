@@ -15,6 +15,13 @@ class UserService {
       .snapshots();
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> getModerators() {
+    return _db
+      .collection('users')
+      .where('role', isEqualTo: 'moderator')
+      .snapshots();
+  }
+
   Future<MyUser?> getCurrentUser() async {
     final User? user = _auth.currentUser;
     if (user == null) {

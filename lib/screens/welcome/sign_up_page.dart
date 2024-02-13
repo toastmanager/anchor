@@ -49,7 +49,7 @@ class _SignUpPageStepOneState extends State<SignUpPageStepOne> {
     } catch (e) {
       log(e.toString());
       if (mounted) {
-        simpleAlert(e.toString(), context);
+        simpleTextAlert(e.toString(), context);
       }
     }
   }

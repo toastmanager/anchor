@@ -1,4 +1,5 @@
 import 'package:anchor/models/my_user_model.dart';
+import 'package:anchor/screens/main_wrapper.dart';
 import 'package:anchor/screens/personal_account/profile_screen.dart';
 import 'package:anchor/screens/personal_account/schedule_screen.dart';
 import 'package:anchor/screens/personal_account/user_created_events_screen.dart';
@@ -97,6 +98,14 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> with SingleTi
             height: MediaQuery.of(context).size.height - appBarHeight - 85,
             user: user,
             userService: userService,
+            onUserChange: () async {
+              user = (await userService.getCurrentUser())!;
+              if (mounted) {
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) => const MainWrapper(),
+                ));
+              }
+            },
           ),
         ];
 
@@ -126,7 +135,7 @@ class _PersonalAccountPageState extends State<PersonalAccountPage> with SingleTi
               TabBar(
                 controller: _tabController,
                 tabs: _tabs,
-              )
+              ),
             ],
           ),
           body: TabBarView(

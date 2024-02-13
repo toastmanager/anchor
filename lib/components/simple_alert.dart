@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-simpleAlert(String text, BuildContext context) => showDialog(
+simpleTextAlert(String text, BuildContext context) => showDialog(
   context: context,
   builder: (context) => Center(
     child: Padding(
@@ -26,6 +26,23 @@ simpleAlert(String text, BuildContext context) => showDialog(
             ),
           ],
         )
+      ),
+    ),
+  ),
+);
+
+simpleWidgetAlert(Widget child, BuildContext context) => showDialog(
+  context: context,
+  builder: (context) => Center(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Theme.of(context).colorScheme.surface,
+        ),
+        padding: const EdgeInsets.all(20),
+        child: child,
       ),
     ),
   ),
