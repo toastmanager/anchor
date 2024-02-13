@@ -134,4 +134,28 @@ class UserService {
       rethrow;
     }
   }
+
+  Future<void> updateUserInfo({
+    String? fullname,
+    String? email,
+    String? picture,
+    Timestamp? birthDate,
+  }) async {
+    try {
+      User? user = _auth.currentUser;
+      final userRef = _db
+        .collection('users')
+        .doc(user?.uid);
+      final userInfo = await userRef.get();
+      await userRef.update({
+        'fullname': fullname ?? userInfo['fullname'],
+        'email': email ?? userInfo['email'],
+        'picture': picture ?? userInfo['picture'],
+        'birthDate': birthDate ?? userInfo['birthDate'],
+      });
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }

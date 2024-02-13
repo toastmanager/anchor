@@ -110,19 +110,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                 UniTextField(
                   controller: fullnameController,
                   labelText: 'ФИО',
-                  readOnly: editMode,
+                  readOnly: !editMode,
                 ),
                 const SizedBox(height: 20),
                 UniTextField(
                   controller: emailController,
                   labelText: 'Почта',
-                  readOnly: editMode,
+                  readOnly: !editMode,
                 ),
                 const SizedBox(height: 20),
                 UniTextField(
                   controller: birthDateController,
                   labelText: 'Дата рождения',
-                  readOnly: editMode,
+                  readOnly: !editMode,
                   keyboardType: TextInputType.datetime,
                   inputFormatters: [dateInputMask],
                 ),
