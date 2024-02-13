@@ -55,7 +55,7 @@ class _NewsPageState extends State<NewsPage> {
                 height: kToolbarHeight + 11,
                 title: 'Новости',
                 actions: [
-                  if (user.role == 'moderator')
+                  // if (user.role == 'moderator')
                     IconButton(
                       icon: const Icon(CupertinoIcons.add),
                       onPressed: () => Navigator.push(context, MaterialPageRoute(
