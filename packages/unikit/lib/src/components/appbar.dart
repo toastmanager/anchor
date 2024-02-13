@@ -24,26 +24,30 @@ class UniAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        AppBar(
-          surfaceTintColor: Colors.transparent,
-          leading: leading,
-          centerTitle: centerTitle,
-          iconTheme: IconThemeData(
-            color: Theme.of(context).colorScheme.primary,
-            size: Theme.of(context).textTheme.titleLarge!.fontSize! + 8
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: Column(
+        children: <Widget>[
+          AppBar(
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Colors.transparent,
+            leading: leading,
+            centerTitle: centerTitle,
+            iconTheme: IconThemeData(
+              color: Theme.of(context).colorScheme.primary,
+              size: Theme.of(context).textTheme.titleLarge!.fontSize! + 8
+            ),
+            actions: actions,
+            titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600
+            ),
+            title: Text(title ?? ''),
           ),
-          actions: actions,
-          titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w600
-          ),
-          title: Text(title ?? ''),
-        ),
-      ] + bottomActions + [
-        const SizedBox(height: 10),  
-        const UniDividerSmall()
-      ],
+        ] + bottomActions + [
+          const SizedBox(height: 10),  
+          const UniDividerSmall()
+        ],
+      ),
     );
   }
 }
