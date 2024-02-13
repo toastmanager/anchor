@@ -35,6 +35,14 @@ class _ProfileScreenState extends State<ProfileScreen>
     super.initState();
   }
 
+  bool editMode = false;
+
+  void switchEditMode() {
+    setState(() {
+      editMode = !editMode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var fullnameController = TextEditingController(
@@ -93,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       'Редактировать',
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () => switchEditMode(),
                 ),
               ],
             ),
@@ -102,19 +110,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                 UniTextField(
                   controller: fullnameController,
                   labelText: 'ФИО',
-                  readOnly: true,
+                  readOnly: editMode,
                 ),
                 const SizedBox(height: 20),
                 UniTextField(
                   controller: emailController,
                   labelText: 'Почта',
-                  readOnly: true,
+                  readOnly: editMode,
                 ),
                 const SizedBox(height: 20),
                 UniTextField(
                   controller: birthDateController,
                   labelText: 'Дата рождения',
-                  readOnly: true,
+                  readOnly: editMode,
                   keyboardType: TextInputType.datetime,
                   inputFormatters: [dateInputMask],
                 ),
