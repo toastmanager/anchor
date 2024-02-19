@@ -4,6 +4,7 @@ import 'package:anchor/screens/news/news_card.dart';
 import 'package:anchor/screens/news/news_create_page.dart';
 import 'package:anchor/utilities/news_service.dart';
 import 'package:anchor/utilities/user_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:unikit/unikit.dart';
@@ -19,10 +20,20 @@ class _NewsPageState extends State<NewsPage> {
   final UserService _userService = UserService();
   final NewsService _newsService = NewsService();
 
+  late Future<MyUser?> currentUser;
+  late Stream<QuerySnapshot<Object?>> newsListStream;
+
+  @override
+  void initState() {
+    super.initState();
+    currentUser = _userService.getCurrentUser();
+    newsListStream = _newsService.getNews();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _userService.getCurrentUser(),
+      future: currentUser,
       builder: (context, userSnapshot) {
         if (!userSnapshot.hasData) {
           if (userSnapshot.connectionState == ConnectionState.waiting) {
@@ -36,7 +47,7 @@ class _NewsPageState extends State<NewsPage> {
         MyUser user = userSnapshot.data!;
 
         return StreamBuilder(
-          stream: _newsService.getNews(),
+          stream: newsListStream,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               if (snapshot.connectionState == ConnectionState.waiting) {

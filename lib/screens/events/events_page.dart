@@ -23,11 +23,15 @@ class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateM
   final _userService = UserService();
   final int _tabsLength = 3;
   late final TabController tabController;
+  late Future<MyUser?> currentUser;
+  late Stream<QuerySnapshot<Object?>> futureEventsList;
 
   @override
   void initState() {
     tabController = TabController(length: _tabsLength, vsync: this);
     super.initState();
+    currentUser = _userService.getCurrentUser();
+    futureEventsList = eventService.getFutureEvents();
   }
 
   @override
@@ -39,7 +43,7 @@ class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<MyUser?>(
-      future: _userService.getCurrentUser(),
+      future: currentUser,
       builder: (context, snapshot) {
         if (!snapshot.hasData && snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: SizedBox(
@@ -130,7 +134,7 @@ class _EventsPageState extends State<EventsPage> with SingleTickerProviderStateM
 
   StreamBuilder<QuerySnapshot<Object?>> futureEvents() {
     return StreamBuilder(
-      stream: eventService.getFutureEvents(),
+      stream: futureEventsList,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           if (snapshot.connectionState == ConnectionState.waiting) {

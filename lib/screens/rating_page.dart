@@ -2,6 +2,7 @@ import 'package:anchor/components/strings.dart';
 import 'package:anchor/components/user_avatar.dart';
 import 'package:anchor/models/my_user_model.dart';
 import 'package:anchor/utilities/user_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:unikit/unikit.dart';
@@ -17,10 +18,20 @@ class _RatingPageState extends State<RatingPage> {
   final appBarHeight = kToolbarHeight + 11 + 35;
   final UserService _userService = UserService();
 
+  late Future<MyUser?> currentUser;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> leaders;
+
+  @override
+  void initState() {
+    super.initState();
+    currentUser = _userService.getCurrentUser();
+    leaders = _userService.getFirstFifteenLeaders();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _userService.getCurrentUser(),
+      future: currentUser,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -60,7 +71,7 @@ class _RatingPageState extends State<RatingPage> {
           body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: StreamBuilder(
-              stream: _userService.getFirstFifteenLeaders(),
+              stream: leaders,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
