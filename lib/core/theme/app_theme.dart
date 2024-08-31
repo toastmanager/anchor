@@ -29,6 +29,16 @@ class AppTheme {
       padding: WidgetStatePropertyAll(
           EdgeInsets.symmetric(horizontal: 20, vertical: 20)));
 
+  static Color dividerColor(BuildContext context) =>
+      Theme.of(context).colorScheme.onSurface.withOpacity(0.15);
+
+  static BorderSide borderSide(BuildContext context) =>
+      BorderSide(color: Theme.of(context).dividerColor, width: 1.5);
+
+  static TextStyle? hintStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleMedium?.copyWith(
+          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3));
+
   static ThemeData lightTheme(BuildContext context) => ThemeData(
         colorScheme: ColorScheme.fromSeed(
                 brightness: Brightness.light,
@@ -40,5 +50,6 @@ class AppTheme {
         fontFamily: 'Onest',
         filledButtonTheme: filledButtonThemeData,
         outlinedButtonTheme: outlinedButtonThemeData(context),
+        dividerColor: dividerColor(context),
       );
 }
