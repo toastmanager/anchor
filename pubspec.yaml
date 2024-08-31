@@ -21,6 +21,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   supabase_flutter: ^2.6.0
   smooth_corner: ^1.1.0
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -42,6 +43,7 @@ flutter:
     - assets/images/anchor_logo.png
     - assets/images/default_avatar.png
     - assets/images/welcome_illustration.svg
+    - .env
 
   fonts:
     - family: Onest
