@@ -5,15 +5,14 @@ class AppTheme {
   static TextTheme textTheme(BuildContext context) =>
       Theme.of(context).textTheme.apply(fontSizeDelta: 2, fontFamily: 'Onest');
 
-  static FilledButtonThemeData filledButtonThemeData(BuildContext context) =>
-      FilledButtonThemeData(
-          style: ButtonStyle(
-              padding: const WidgetStatePropertyAll(
-                  EdgeInsets.symmetric(horizontal: 20, vertical: 16)),
-              shape: WidgetStatePropertyAll(SmoothRectangleBorder(
-                smoothness: 1,
-                borderRadius: BorderRadius.circular(12),
-              ))));
+  static FilledButtonThemeData filledButtonThemeData = FilledButtonThemeData(
+      style: ButtonStyle(
+          padding: const WidgetStatePropertyAll(
+              EdgeInsets.symmetric(horizontal: 20, vertical: 16)),
+          shape: WidgetStatePropertyAll(SmoothRectangleBorder(
+            smoothness: 1,
+            borderRadius: BorderRadius.circular(12),
+          ))));
 
   static OutlinedButtonThemeData outlinedButtonThemeData(
           BuildContext context) =>
@@ -26,14 +25,20 @@ class AppTheme {
               foregroundColor: WidgetStatePropertyAll(
                   Theme.of(context).colorScheme.onSurface)));
 
+  static ButtonStyle bigButton = const ButtonStyle(
+      padding: WidgetStatePropertyAll(
+          EdgeInsets.symmetric(horizontal: 20, vertical: 20)));
+
   static ThemeData lightTheme(BuildContext context) => ThemeData(
         colorScheme: ColorScheme.fromSeed(
-                brightness: Brightness.light, seedColor: const Color(0xFF554AF0))
+                brightness: Brightness.light,
+                seedColor: const Color(0xFF554AF0))
             .copyWith(
           primary: const Color(0xFF554AF0),
         ),
         textTheme: textTheme(context),
-        filledButtonTheme: filledButtonThemeData(context),
+        fontFamily: 'Onest',
+        filledButtonTheme: filledButtonThemeData,
         outlinedButtonTheme: outlinedButtonThemeData(context),
       );
 }

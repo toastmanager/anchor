@@ -1,5 +1,6 @@
 import 'package:anchor/core/constants/constants.dart';
 import 'package:anchor/core/theme/app_theme.dart';
+import 'package:anchor/features/authorization/presentation/pages/auth_choose_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -29,15 +30,7 @@ class MainApp extends StatelessWidget {
         theme: AppTheme.lightTheme(context),
         home: Scaffold(
           body: SafeArea(
-              child: SingleChildScrollView(
-            child: Column(
-              children: [
-                OutlinedButton(
-                    onPressed: () {}, child: const Text('Зарегистрироваться')),
-                FilledButton(onPressed: () {}, child: const Text('Войти')),
-              ],
-            ),
-          )),
+              child: AuthChoosePage()),
         ));
   }
 }
