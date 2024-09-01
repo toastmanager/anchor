@@ -1,4 +1,5 @@
 import 'package:anchor/features/authorization/domain/entities/sign_up_entity.dart';
+import 'package:anchor/features/authorization/domain/entities/user_entity.dart';
 import 'package:anchor/features/authorization/domain/usecases/sign_up.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -11,7 +12,9 @@ part 'sign_up_state.dart';
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final SignUp signUp;
   SignUpEntity signUpEntity = SignUpEntity(
-      email: '', password: '', fullName: '', birthDate: DateTime.now());
+      email: '',
+      password: '',
+      userEntity: UserEntity(fullName: '', birthDate: DateTime.now()));
 
   SignUpBloc({required this.signUp}) : super(SignUpInitial()) {
     on<SignUpEmailUpdateEvent>(_onEmailUpdate);
@@ -32,12 +35,15 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   void _onFullNameUpdate(
       SignUpFullNameUpdateEvent event, Emitter<SignUpState> emit) {
-    signUpEntity = signUpEntity.copyWith(fullName: event.fullName);
+    signUpEntity = signUpEntity.copyWith(
+        userEntity: signUpEntity.userEntity.copyWith(fullName: event.fullName));
   }
 
   void _onBirthDateUpdate(
       SignUpBirthDateUpdateEvent event, Emitter<SignUpState> emit) {
-    signUpEntity = signUpEntity.copyWith(birthday: event.birthDate);
+    signUpEntity = signUpEntity.copyWith(
+        userEntity:
+            signUpEntity.userEntity.copyWith(birthDate: event.birthDate));
   }
 
   void _onSignUp(SignUpExecuteEvent event, Emitter<SignUpState> emit) {
