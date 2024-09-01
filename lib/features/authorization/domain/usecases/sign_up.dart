@@ -1,6 +1,8 @@
 import 'package:anchor/features/authorization/domain/entities/sign_up_entity.dart';
 import 'package:anchor/features/authorization/domain/repositories/auth_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class SignUp {
   final AuthRepository repository;
 
