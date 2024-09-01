@@ -11,19 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
-  final router = sl<AppRouter>();
-  final _formGlobalKey = GlobalKey<FormState>();
-
-  @override
   Widget build(BuildContext context) {
+    final router = sl<AppRouter>();
+    final formGlobalKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -50,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                _SignUpForm(formGlobalKey: _formGlobalKey),
+                _SignUpForm(formGlobalKey: formGlobalKey),
                 const SizedBox(
                   height: 30,
                 ),
@@ -100,6 +94,9 @@ class _SignUpFormState extends State<_SignUpForm> {
   bool isPasswordObscure = true;
   String emailErrorMessage = '';
   String passwordErrorMessage = '';
+  String fullNameErrorMessage = '';
+  String birthDateErrorMessage = '';
+  final dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +105,7 @@ class _SignUpFormState extends State<_SignUpForm> {
       create: (context) => sl<SignUpBloc>(),
       child: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
+          final bloc = context.read<SignUpBloc>();
           return Form(
             key: formGlobalKey,
             child: Column(
@@ -153,8 +151,7 @@ class _SignUpFormState extends State<_SignUpForm> {
                   side: AppTheme.borderSide(context),
                   child: TextFormField(
                     obscureText: isPasswordObscure,
-                    onChanged: (password) => context
-                        .read<SignUpBloc>()
+                    onChanged: (password) => bloc
                         .add(SignUpPasswordUpdateEvent(password: password)),
                     decoration: AppTheme.inputDecoration(context,
                         hintText: 'Enter your password',
@@ -174,15 +171,73 @@ class _SignUpFormState extends State<_SignUpForm> {
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Theme.of(context).colorScheme.error)),
                 const SizedBox(
+                  height: 10,
+                ),
+                Text('Full name',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(
+                  height: 10,
+                ),
+                SquircleClipper(
+                  side: AppTheme.borderSide(context),
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (fullName) =>
+                        bloc.add(SignUpFullNameUpdateEvent(fullName: fullName)),
+                    decoration: AppTheme.inputDecoration(
+                      context,
+                      hintText: 'Enter your full name',
+                    ),
+                  ),
+                ),
+                if (fullNameErrorMessage != '')
+                  Text(fullNameErrorMessage,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.error)),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text('Birth date',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(
+                  height: 10,
+                ),
+                SquircleClipper(
+                  side: AppTheme.borderSide(context),
+                  child: TextFormField(
+                    controller: dateController,
+                    readOnly: true,
+                    keyboardType: TextInputType.emailAddress,
+                    onTap: () async {
+                      await selectBirthDate();
+                      bloc.add(SignUpBirthDateUpdateEvent(
+                          birthDate: DateTime.tryParse(dateController.text) ??
+                              DateTime.now()));
+                    },
+                    decoration: AppTheme.inputDecoration(
+                      context,
+                      hintText: 'Choose your birth date',
+                    ),
+                  ),
+                ),
+                if (birthDateErrorMessage != '')
+                  Text(birthDateErrorMessage,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.error)),
+                const SizedBox(
                   height: 20,
                 ),
                 ExpandedHorizontally(
                     child: FilledButton(
                         onPressed: () {
                           if (formGlobalKey.currentState!.validate()) {
-                            context
-                                .read<SignUpBloc>()
-                                .add(SignUpExecuteEvent());
+                            bloc.add(SignUpExecuteEvent());
                           }
                         },
                         style: AppTheme.bigButton,
@@ -193,5 +248,19 @@ class _SignUpFormState extends State<_SignUpForm> {
         },
       ),
     );
+  }
+
+  Future<void> selectBirthDate() async {
+    final dateNow = DateTime.now();
+    DateTime? date = await showDatePicker(
+        context: context,
+        initialDate: dateNow,
+        firstDate: DateTime(1900),
+        lastDate: dateNow);
+    if (date != null) {
+      setState(() {
+        dateController.text = date.toString().split(' ')[0];
+      });
+    }
   }
 }

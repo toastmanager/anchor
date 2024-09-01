@@ -11,19 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class SignInPage extends StatefulWidget {
+class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
-}
-
-class _SignInPageState extends State<SignInPage> {
-  final router = sl<AppRouter>();
-  final _formGlobalKey = GlobalKey<FormState>();
-
-  @override
   Widget build(BuildContext context) {
+    final router = sl<AppRouter>();
+    final formGlobalKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -49,7 +43,7 @@ class _SignInPageState extends State<SignInPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                _SignInForm(_formGlobalKey),
+                _SignInForm(formGlobalKey),
                 const SizedBox(
                   height: 30,
                 ),
