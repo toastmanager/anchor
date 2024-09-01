@@ -10,10 +10,37 @@ part 'sign_up_state.dart';
 @injectable
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   final SignUp signUp;
+  SignUpEntity signUpEntity = SignUpEntity(
+      email: '', password: '', fullName: '', birthDate: DateTime.now());
 
   SignUpBloc({required this.signUp}) : super(SignUpInitial()) {
-    on<SignUpEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<SignUpEmailUpdateEvent>(_onEmailUpdate);
+    on<SignUpPasswordUpdateEvent>(_onPasswordUpdate);
+    on<SignUpFullNameUpdateEvent>(_onFullNameUpdate);
+    on<SignUpBirthDateUpdateEvent>(_onBirthDateUpdate);
+    on<SignUpExecuteEvent>(_onSignUp);
+  }
+
+  void _onEmailUpdate(SignUpEmailUpdateEvent event, Emitter<SignUpState> emit) {
+    signUpEntity = signUpEntity.copyWith(email: event.email);
+  }
+
+  void _onPasswordUpdate(
+      SignUpPasswordUpdateEvent event, Emitter<SignUpState> emit) {
+    signUpEntity = signUpEntity.copyWith(password: event.password);
+  }
+
+  void _onFullNameUpdate(
+      SignUpFullNameUpdateEvent event, Emitter<SignUpState> emit) {
+    signUpEntity = signUpEntity.copyWith(fullName: event.fullName);
+  }
+
+  void _onBirthDateUpdate(
+      SignUpBirthDateUpdateEvent event, Emitter<SignUpState> emit) {
+    signUpEntity = signUpEntity.copyWith(birthday: event.birthDate);
+  }
+
+  void _onSignUp(SignUpExecuteEvent event, Emitter<SignUpState> emit) {
+    signUp.execute(signUpEntity);
   }
 }

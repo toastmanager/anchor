@@ -31,8 +31,4 @@ class SignUpBirthDateUpdateEvent extends SignUpEvent {
   const SignUpBirthDateUpdateEvent({required this.birthDate});
 }
 
-class SignUpExecuteEvent extends SignUpEvent {
-  final SignUpEntity signUpEntity;
-
-  const SignUpExecuteEvent({required this.signUpEntity});
-}
+class SignUpExecuteEvent extends SignUpEvent {}

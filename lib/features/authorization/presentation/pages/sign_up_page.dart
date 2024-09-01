@@ -4,9 +4,11 @@ import 'package:anchor/core/components/squircle_clipper.dart';
 import 'package:anchor/core/routes/router.dart';
 import 'package:anchor/core/routes/router.gr.dart';
 import 'package:anchor/core/theme/app_theme.dart';
+import 'package:anchor/features/authorization/presentation/blocs/sign_up/sign_up_bloc.dart';
 import 'package:anchor/injection.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class SignUpPage extends StatefulWidget {
@@ -17,11 +19,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  bool isPasswordObscure = true;
   final router = sl<AppRouter>();
   final _formGlobalKey = GlobalKey<FormState>();
-  String emailErrorMessage = '';
-  String passwordErrorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +45,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   height: 10,
                 ),
                 Text('Enter your personal information',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: AppTheme.secondaryTextColor(context))),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppTheme.secondaryTextColor(context))),
                 const SizedBox(
                   height: 20,
                 ),
-                _signUpForm(context),
-                const SizedBox(
-                  height: 20,
-                ),
-                ExpandedHorizontally(
-                    child: FilledButton(
-                        onPressed: () {},
-                        style: AppTheme.bigButton,
-                        child: const Text('Next'))),
+                _SignUpForm(formGlobalKey: _formGlobalKey),
                 const SizedBox(
                   height: 30,
                 ),
@@ -96,72 +85,112 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+}
 
-  Form _signUpForm(BuildContext context) {
-    return Form(
-      key: _formGlobalKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Email',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.w600)),
-          const SizedBox(
-            height: 10,
-          ),
-          SquircleClipper(
-            side: AppTheme.borderSide(context),
-            child: TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: AppTheme.inputDecoration(
-                context,
-                hintText: 'Enter your email',
-              ),
-            ),
-          ),
-          if (emailErrorMessage != '')
-            Text(emailErrorMessage,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(color: Theme.of(context).colorScheme.error)),
-          const SizedBox(
-            height: 10,
-          ),
-          Text('Password',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.w600)),
-          const SizedBox(
-            height: 10,
-          ),
-          SquircleClipper(
-            side: AppTheme.borderSide(context),
-            child: TextFormField(
-              obscureText: isPasswordObscure,
-              decoration: AppTheme.inputDecoration(context,
-                  hintText: 'Enter your password',
-                  suffix: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: EyeToggleButton(
-                      isOpen: isPasswordObscure,
-                      onTap: () => setState(() {
-                        isPasswordObscure = !isPasswordObscure;
-                      }),
+class _SignUpForm extends StatefulWidget {
+  const _SignUpForm({required this.formGlobalKey});
+
+  final GlobalKey<FormState> formGlobalKey;
+
+  @override
+  State<_SignUpForm> createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<_SignUpForm> {
+  bool isPasswordObscure = true;
+  String emailErrorMessage = '';
+  String passwordErrorMessage = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final formGlobalKey = widget.formGlobalKey;
+    return BlocProvider(
+      create: (context) => sl<SignUpBloc>(),
+      child: BlocBuilder<SignUpBloc, SignUpState>(
+        builder: (context, state) {
+          return Form(
+            key: formGlobalKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Email',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(
+                  height: 10,
+                ),
+                SquircleClipper(
+                  side: AppTheme.borderSide(context),
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (email) => context
+                        .read<SignUpBloc>()
+                        .add(SignUpEmailUpdateEvent(email: email)),
+                    decoration: AppTheme.inputDecoration(
+                      context,
+                      hintText: 'Enter your email',
                     ),
-                  )),
+                  ),
+                ),
+                if (emailErrorMessage != '')
+                  Text(emailErrorMessage,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.error)),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text('Password',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(
+                  height: 10,
+                ),
+                SquircleClipper(
+                  side: AppTheme.borderSide(context),
+                  child: TextFormField(
+                    obscureText: isPasswordObscure,
+                    onChanged: (password) => context
+                        .read<SignUpBloc>()
+                        .add(SignUpPasswordUpdateEvent(password: password)),
+                    decoration: AppTheme.inputDecoration(context,
+                        hintText: 'Enter your password',
+                        suffix: Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: EyeToggleButton(
+                            isOpen: isPasswordObscure,
+                            onTap: () => setState(() {
+                              isPasswordObscure = !isPasswordObscure;
+                            }),
+                          ),
+                        )),
+                  ),
+                ),
+                if (passwordErrorMessage != '')
+                  Text(passwordErrorMessage,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.error)),
+                const SizedBox(
+                  height: 20,
+                ),
+                ExpandedHorizontally(
+                    child: FilledButton(
+                        onPressed: () {
+                          if (formGlobalKey.currentState!.validate()) {
+                            context
+                                .read<SignUpBloc>()
+                                .add(SignUpExecuteEvent());
+                          }
+                        },
+                        style: AppTheme.bigButton,
+                        child: const Text('Sign up'))),
+              ],
             ),
-          ),
-          if (passwordErrorMessage != '')
-            Text(passwordErrorMessage,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(color: Theme.of(context).colorScheme.error)),
-        ],
+          );
+        },
       ),
     );
   }
