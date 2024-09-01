@@ -32,10 +32,7 @@ class AuthChoosePage extends StatelessWidget {
             Text(
               'Show your skills with us!',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onSurface
-                      .withOpacity(0.62)),
+                  color: AppTheme.secondaryTextColor(context)),
             ),
             const SizedBox(height: 20),
             ExpandedHorizontally(

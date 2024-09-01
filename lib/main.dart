@@ -1,5 +1,6 @@
 import 'package:anchor/core/constants/constants.dart';
 import 'package:anchor/core/theme/app_theme.dart';
+import 'package:anchor/features/authorization/presentation/pages/auth_choose_page.dart';
 import 'package:anchor/features/authorization/presentation/pages/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
         title: 'Anchor',
         theme: AppTheme.lightTheme(context),
-        home: SafeArea(child: SignInPage()));
+        home: SafeArea(child: AuthChoosePage()));
   }
 }
