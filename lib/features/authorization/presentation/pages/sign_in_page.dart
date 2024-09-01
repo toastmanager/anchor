@@ -28,15 +28,26 @@ class _SignInPageState extends State<SignInPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Sign in'),
+            Text('Sign in',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(
               height: 10,
             ),
-            Text('Enter your account details'),
+            Text('Enter your account details',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: AppTheme.secondaryTextColor(context)
+            )),
             const SizedBox(
               height: 20,
             ),
-            Text('Email'),
+            Text('Email',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(
               height: 10,
             ),
@@ -52,7 +63,11 @@ class _SignInPageState extends State<SignInPage> {
             const SizedBox(
               height: 10,
             ),
-            Text('Password'),
+            Text('Password',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(
               height: 10,
             ),

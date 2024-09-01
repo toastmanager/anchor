@@ -59,6 +59,9 @@ class AppTheme {
     );
   }
 
+  static Color secondaryTextColor(BuildContext context) =>
+      Theme.of(context).colorScheme.onSurface.withOpacity(0.62);
+
   static ThemeData lightTheme(BuildContext context) => ThemeData(
         colorScheme: ColorScheme.fromSeed(
                 brightness: Brightness.light,
