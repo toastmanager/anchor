@@ -2,20 +2,17 @@ import 'package:anchor/core/components/expanded_horizontal.dart';
 import 'package:anchor/core/components/eye_toggle.dart';
 import 'package:anchor/core/components/squircle_clipper.dart';
 import 'package:anchor/core/theme/app_theme.dart';
-import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
-@RoutePage()
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   bool isPasswordObscure = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +25,7 @@ class _SignInPageState extends State<SignInPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Sign in',
+            Text('Sign up',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
@@ -36,10 +33,11 @@ class _SignInPageState extends State<SignInPage> {
             const SizedBox(
               height: 10,
             ),
-            Text('Enter your account details',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: AppTheme.secondaryTextColor(context)
-            )),
+            Text('Enter your personal information',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: AppTheme.secondaryTextColor(context))),
             const SizedBox(
               height: 20,
             ),
@@ -107,7 +105,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: FilledButton(
                     onPressed: () {},
                     style: AppTheme.bigButton,
-                    child: const Text('Sign in'))),
+                    child: const Text('Next'))),
             const SizedBox(
               height: 30,
             ),
@@ -120,9 +118,9 @@ class _SignInPageState extends State<SignInPage> {
                     text: TextSpan(
                         style: Theme.of(context).textTheme.bodyMedium,
                         children: [
-                          const TextSpan(text: 'Don\'t have an account? '),
+                          const TextSpan(text: 'Already have an account? '),
                           TextSpan(
-                              text: 'Sign up',
+                              text: 'Sign in',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
