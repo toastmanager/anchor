@@ -1,3 +1,4 @@
+import 'package:anchor/features/authorization/domain/entities/sign_in_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 
@@ -9,6 +10,13 @@ class SignInModel extends Equatable {
   final String password;
 
   const SignInModel({required this.email, required this.password});
+
+  factory SignInModel.fromEntity(SignInEntity entity) {
+    return SignInModel(email: entity.email, password: entity.password);
+  }
+  SignInEntity toEntity() {
+    return SignInEntity(email: email, password: password);
+  }
 
   @override
   List<Object?> get props => [email, password];
