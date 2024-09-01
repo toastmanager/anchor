@@ -13,12 +13,12 @@ void main() async {
 
   await dotenv.load(fileName: '.env');
 
-  configureDependencies();
-
   await Supabase.initialize(
     url: Const.apiUrl,
     anonKey: Const.anonKey,
   );
+
+  configureDependencies();
 
   runApp(MainApp());
 }

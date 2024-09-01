@@ -8,6 +8,6 @@ class SignUp {
 
   const SignUp({required this.repository});
 
-  void execute(SignUpEntity signUpEntity) =>
-      repository.signUp(signUpEntity: signUpEntity);
+  Future<void> execute(SignUpEntity signUpEntity) =>
+      repository.signUp(entity: signUpEntity);
 }

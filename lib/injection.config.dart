@@ -13,6 +13,8 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 import 'core/routes/router.dart' as _i66;
+import 'features/authorization/data/datasources/remote/auth_remote_data_source.dart'
+    as _i969;
 import 'features/authorization/data/repositories/auth_repository.dart'
     as _i1046;
 import 'features/authorization/domain/repositories/auth_repository.dart'
@@ -39,7 +41,12 @@ extension GetItInjectableX on _i174.GetIt {
     final supabaseModule = _$SupabaseModule();
     gh.singleton<_i66.AppRouter>(() => _i66.AppRouter());
     gh.lazySingleton<_i454.Supabase>(() => supabaseModule.supabase);
-    gh.lazySingleton<_i76.AuthRepository>(() => _i1046.AuthRepositoryImpl());
+    gh.lazySingleton<_i454.SupabaseClient>(() => supabaseModule.supabaseClient);
+    gh.singleton<_i969.AuthRemoteDataSource>(() =>
+        _i969.AuthorizationRemoteDataSourceImpl(
+            client: gh<_i454.SupabaseClient>()));
+    gh.lazySingleton<_i76.AuthRepository>(() => _i1046.AuthRepositoryImpl(
+        authRemoteDataSource: gh<_i969.AuthRemoteDataSource>()));
     gh.lazySingleton<_i560.SignIn>(
         () => _i560.SignIn(repository: gh<_i76.AuthRepository>()));
     gh.lazySingleton<_i963.SignUp>(

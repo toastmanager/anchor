@@ -5,4 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract class SupabaseModule {
   @lazySingleton
   Supabase get supabase => Supabase.instance;
+  
+  @lazySingleton
+  SupabaseClient get supabaseClient => supabase.client;
 }
