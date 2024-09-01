@@ -1,23 +1,21 @@
+import 'package:anchor/core/components/squircle_clipper.dart';
 import 'package:anchor/core/theme/app_theme.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:smooth_corner/smooth_corner.dart';
 
 @RoutePage()
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
   @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          iconSize: 40,
-          icon: const Icon(TablerIcons.arrow_left),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -26,27 +24,12 @@ class SignInPage extends StatelessWidget {
             Text('Sign in'),
             Text('Enter your account details'),
             Text('Email'),
-            // TODO: Move to component
-            SmoothContainer(
-              smoothness: 1,
+            SquircleClipper(
               side: AppTheme.borderSide(context),
-              borderRadius: BorderRadius.circular(12),
               child: TextField(
-                obscureText: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none
-                  ),
+                decoration: AppTheme.inputDecoration(
+                  context,
                   hintText: 'Enter your email',
-                  hintStyle: AppTheme.hintStyle(context),
-                  suffix: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.circular(12),
-                      child: const Icon(TablerIcons.eye)),
-                  )
                 ),
               ),
             ),

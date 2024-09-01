@@ -39,6 +39,26 @@ class AppTheme {
       Theme.of(context).textTheme.titleMedium?.copyWith(
           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3));
 
+  static InputDecoration inputDecoration(BuildContext context,
+      {String? hintText,
+      Widget? suffix,
+      Widget? prefix,
+      bool enabled = true,
+      bool? filled,
+      Color? fillColor}) {
+    return InputDecoration(
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
+      hintText: hintText,
+      hintStyle: AppTheme.hintStyle(context),
+      enabled: enabled,
+      filled: filled,
+      fillColor: fillColor,
+      prefix: prefix,
+      suffix: suffix,
+    );
+  }
+
   static ThemeData lightTheme(BuildContext context) => ThemeData(
         colorScheme: ColorScheme.fromSeed(
                 brightness: Brightness.light,
