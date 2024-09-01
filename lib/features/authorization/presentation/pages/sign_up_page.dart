@@ -2,8 +2,10 @@ import 'package:anchor/core/components/expanded_horizontal.dart';
 import 'package:anchor/core/components/eye_toggle.dart';
 import 'package:anchor/core/components/squircle_clipper.dart';
 import 'package:anchor/core/theme/app_theme.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
