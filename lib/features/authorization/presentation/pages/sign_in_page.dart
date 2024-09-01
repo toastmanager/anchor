@@ -19,11 +19,14 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Sign in'),
             const SizedBox(
@@ -89,7 +92,34 @@ class _SignInPageState extends State<SignInPage> {
                 child: FilledButton(
                     onPressed: () {},
                     style: AppTheme.bigButton,
-                    child: const Text('Sign in')))
+                    child: const Text('Sign in'))),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: RichText(
+                    text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        children: [
+                          const TextSpan(text: 'Don\'t have an account? '),
+                          TextSpan(
+                              text: 'Register',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary)),
+                        ]),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
