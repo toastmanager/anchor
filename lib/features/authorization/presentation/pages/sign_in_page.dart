@@ -19,6 +19,9 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   bool isPasswordObscure = true;
   final router = sl<AppRouter>();
+  final _formGlobalKey = GlobalKey<FormState>();
+  String emailErrorMessage = '';
+  String passwordErrorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -28,119 +31,148 @@ class _SignInPageState extends State<SignInPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Sign in',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(fontWeight: FontWeight.w600)),
-            const SizedBox(
-              height: 10,
-            ),
-            Text('Enter your account details',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: AppTheme.secondaryTextColor(context)
-            )),
-            const SizedBox(
-              height: 20,
-            ),
-            Text('Email',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.w600)),
-            const SizedBox(
-              height: 10,
-            ),
-            SquircleClipper(
-              side: AppTheme.borderSide(context),
-              child: TextField(
-                decoration: AppTheme.inputDecoration(
-                  context,
-                  hintText: 'Enter your email',
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Sign in',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text('Password',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.w600)),
-            const SizedBox(
-              height: 10,
-            ),
-            SquircleClipper(
-              side: AppTheme.borderSide(context),
-              child: TextField(
-                obscureText: isPasswordObscure,
-                decoration: AppTheme.inputDecoration(context,
-                    hintText: 'Enter your password',
-                    suffix: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: EyeToggleButton(
-                        isOpen: isPasswordObscure,
-                        onTap: () => setState(() {
-                          isPasswordObscure = !isPasswordObscure;
-                        }),
+                Text('Enter your account details',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppTheme.secondaryTextColor(context))),
+                const SizedBox(
+                  height: 20,
+                ),
+                _signInForm(context),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () => router.push(const SignUpRoute()),
+                      child: RichText(
+                        text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: [
+                              const TextSpan(text: 'Don\'t have an account? '),
+                              TextSpan(
+                                  text: 'Sign up',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary)),
+                            ]),
                       ),
-                    )),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Form _signInForm(BuildContext context) {
+    return Form(
+      key: _formGlobalKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Email',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.w600)),
+          const SizedBox(
+            height: 10,
+          ),
+          SquircleClipper(
+            side: AppTheme.borderSide(context),
+            child: TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              decoration: AppTheme.inputDecoration(
+                context,
+                hintText: 'Enter your email',
               ),
             ),
-            const SizedBox(
-              height: 20,
+          ),
+          if (emailErrorMessage != '')
+            Text(emailErrorMessage,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.error)),
+          const SizedBox(
+            height: 10,
+          ),
+          Text('Password',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.w600)),
+          const SizedBox(
+            height: 10,
+          ),
+          SquircleClipper(
+            side: AppTheme.borderSide(context),
+            child: TextFormField(
+              obscureText: isPasswordObscure,
+              decoration: AppTheme.inputDecoration(context,
+                  hintText: 'Enter your password',
+                  suffix: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: EyeToggleButton(
+                      isOpen: isPasswordObscure,
+                      onTap: () => setState(() {
+                        isPasswordObscure = !isPasswordObscure;
+                      }),
+                    ),
+                  )),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Forgot your password?'),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            ExpandedHorizontally(
-                child: FilledButton(
-                    onPressed: () {},
-                    style: AppTheme.bigButton,
-                    child: const Text('Sign in'))),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () => router.push(const SignUpRoute()),
-                  child: RichText(
-                    text: TextSpan(
-                        style: Theme.of(context).textTheme.bodyMedium,
-                        children: [
-                          const TextSpan(text: 'Don\'t have an account? '),
-                          TextSpan(
-                              text: 'Sign up',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary)),
-                        ]),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+          if (passwordErrorMessage != '')
+            Text(passwordErrorMessage,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.error)),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: const Text('Forgot your password?'),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ExpandedHorizontally(
+              child: FilledButton(
+                  onPressed: () {
+                    _formGlobalKey.currentState!.validate();
+                  },
+                  style: AppTheme.bigButton,
+                  child: const Text('Sign in'))),
+        ],
       ),
     );
   }
