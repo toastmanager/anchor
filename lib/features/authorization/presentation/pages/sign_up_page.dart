@@ -19,7 +19,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   bool isPasswordObscure = true;
   final router = sl<AppRouter>();
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,18 +92,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     )),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Forgot your password?'),
-                ),
-              ],
             ),
             const SizedBox(
               height: 20,
