@@ -46,7 +46,7 @@ class _SignInPageState extends State<SignInPage> {
             Text('Email',
                 style: Theme.of(context)
                     .textTheme
-                    .titleLarge
+                    .bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(
               height: 10,
@@ -66,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
             Text('Password',
                 style: Theme.of(context)
                     .textTheme
-                    .titleLarge
+                    .bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(
               height: 10,

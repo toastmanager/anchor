@@ -44,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Text('Email',
                 style: Theme.of(context)
                     .textTheme
-                    .titleLarge
+                    .bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(
               height: 10,
@@ -64,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Text('Password',
                 style: Theme.of(context)
                     .textTheme
-                    .titleLarge
+                    .bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(
               height: 10,
