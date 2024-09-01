@@ -14,4 +14,13 @@ class SignUpEntity extends Equatable {
 
   @override
   List<Object?> get props => [email, password, fullName, birthday];
+
+  SignUpEntity copyWith(
+      {String? email, String? password, String? fullName, DateTime? birthday}) {
+    return SignUpEntity(
+        email: email ?? this.email,
+        password: password ?? this.password,
+        fullName: fullName ?? this.fullName,
+        birthday: birthday ?? this.birthday);
+  }
 }
