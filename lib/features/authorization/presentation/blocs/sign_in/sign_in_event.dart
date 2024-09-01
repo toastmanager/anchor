@@ -19,8 +19,4 @@ class SignInPasswordUpdateEvent extends SignInEvent {
   const SignInPasswordUpdateEvent({required this.password});
 }
 
-class SignInExecuteEvent extends SignInEvent {
-  final SignInEntity signInEntity;
-
-  const SignInExecuteEvent({required this.signInEntity});
-}
+class SignInExecuteEvent extends SignInEvent {}
