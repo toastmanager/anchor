@@ -13,10 +13,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
             path: '/auth',
             initial: true,
-            page: AuthChooseRoute.page,
-            children: [
-              AutoRoute(path: 'sign_in', page: SignInRoute.page),
-              AutoRoute(path: 'sign_up', page: SignUpRoute.page),
-            ])
+            page: AuthChooseRoute.page,),
+        AutoRoute(path: '/sign_in', page: SignInRoute.page),
+        AutoRoute(path: '/sign_up', page: SignUpRoute.page)
       ];
 }

@@ -1,5 +1,8 @@
 import 'package:anchor/core/components/expanded_horizontal.dart';
+import 'package:anchor/core/routes/router.dart';
+import 'package:anchor/core/routes/router.gr.dart';
 import 'package:anchor/core/theme/app_theme.dart';
+import 'package:anchor/injection.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +13,7 @@ class AuthChoosePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final router = sl<AppRouter>();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -37,14 +41,14 @@ class AuthChoosePage extends StatelessWidget {
             const SizedBox(height: 20),
             ExpandedHorizontally(
                 child: FilledButton(
-              onPressed: () {},
+              onPressed: () => router.push(const SignInRoute()),
               style: AppTheme.bigButton,
               child: const Text('Sign in'),
             )),
             const SizedBox(height: 20),
             ExpandedHorizontally(
                 child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () => router.push(const SignUpRoute()),
               style: AppTheme.bigButton,
               child: const Text('Sign up'),
             )),
