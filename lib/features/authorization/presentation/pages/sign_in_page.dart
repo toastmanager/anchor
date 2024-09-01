@@ -1,3 +1,4 @@
+import 'package:anchor/core/components/expanded_horizontal.dart';
 import 'package:anchor/core/components/eye_toggle.dart';
 import 'package:anchor/core/components/squircle_clipper.dart';
 import 'package:anchor/core/theme/app_theme.dart';
@@ -80,7 +81,15 @@ class _SignInPageState extends State<SignInPage> {
                   child: const Text('Forgot your password?'),
                 ),
               ],
-            )
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ExpandedHorizontally(
+                child: FilledButton(
+                    onPressed: () {},
+                    style: AppTheme.bigButton,
+                    child: const Text('Sign in')))
           ],
         ),
       ),
