@@ -10,12 +10,25 @@ part 'sign_in_state.dart';
 @injectable
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
   final SignIn signIn;
+  SignInEntity _signInEntity =
+      const SignInEntity(email: '', password: '');
 
-  SignInBloc({
-    required this.signIn
-  }) : super(SignInInitial()) {
-    on<SignInEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  SignInBloc({required this.signIn}) : super(SignInInitial()) {
+    on<SignInEmailUpdateEvent>(_onEmailUpdate);
+    on<SignInPasswordUpdateEvent>(_onPasswordUpdate);
+    on<SignInExecuteEvent>(_onSignInUpdate);
+  }
+
+  void _onEmailUpdate(SignInEmailUpdateEvent event, Emitter<SignInState> emit) {
+    _signInEntity = _signInEntity.copyWith(email: event.email);
+  }
+
+  void _onPasswordUpdate(
+      SignInPasswordUpdateEvent event, Emitter<SignInState> emit) {
+    _signInEntity = _signInEntity.copyWith(password: event.password);
+  }
+
+  void _onSignInUpdate(SignInExecuteEvent event, Emitter<SignInState> emit) {
+    signIn.execute(_signInEntity);
   }
 }
