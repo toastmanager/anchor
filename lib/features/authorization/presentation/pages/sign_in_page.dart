@@ -1,7 +1,10 @@
 import 'package:anchor/core/components/expanded_horizontal.dart';
 import 'package:anchor/core/components/eye_toggle.dart';
 import 'package:anchor/core/components/squircle_clipper.dart';
+import 'package:anchor/core/routes/router.dart';
+import 'package:anchor/core/routes/router.gr.dart';
 import 'package:anchor/core/theme/app_theme.dart';
+import 'package:anchor/injection.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +18,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   bool isPasswordObscure = true;
+  final router = sl<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +119,7 @@ class _SignInPageState extends State<SignInPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => router.push(const SignUpRoute()),
                   child: RichText(
                     text: TextSpan(
                         style: Theme.of(context).textTheme.bodyMedium,
