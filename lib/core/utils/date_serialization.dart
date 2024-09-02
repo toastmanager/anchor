@@ -1,20 +1,22 @@
 class DateSerialization {
-  static int toJson(DateTime date) => date.millisecondsSinceEpoch;
-  static DateTime fromJson(int timestamp) =>
-      DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+  static String toJson(DateTime date) {
+    return date.toUtc().toIso8601String();
+  }
 
-  static List<int> listToJson(List<DateTime> dates) {
-    List<int> res = [];
+  static DateTime fromJson(String timestamp) => DateTime.parse(timestamp);
+
+  static List<String> listToJson(List<DateTime> dates) {
+    List<String> res = [];
     for (DateTime date in dates) {
-      res.add(date.millisecondsSinceEpoch);
+      res.add(toJson(date));
     }
     return res;
   }
 
   static List<DateTime> listFromJson(List<dynamic> timestamps) {
     List<DateTime> res = [];
-    for (int timestamp in timestamps) {
-      res.add(DateTime.fromMillisecondsSinceEpoch(timestamp * 1000));
+    for (String timestamp in timestamps) {
+      res.add(fromJson(timestamp));
     }
     return res;
   }

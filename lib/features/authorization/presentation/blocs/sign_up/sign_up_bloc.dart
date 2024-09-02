@@ -1,5 +1,5 @@
 import 'package:anchor/features/authorization/domain/entities/sign_up_entity.dart';
-import 'package:anchor/features/authorization/domain/entities/user_entity.dart';
+import 'package:anchor/features/authorization/domain/entities/user_sign_up_entity.dart';
 import 'package:anchor/features/authorization/domain/usecases/sign_up.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -14,7 +14,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   SignUpEntity signUpEntity = SignUpEntity(
       email: '',
       password: '',
-      userEntity: UserEntity(fullName: '', birthDate: DateTime.now()));
+      userEntity: UserSignUpEntity(fullName: '', birthDate: DateTime.now()));
 
   SignUpBloc({required this.signUp}) : super(SignUpInitial()) {
     on<SignUpEmailUpdateEvent>(_onEmailUpdate);

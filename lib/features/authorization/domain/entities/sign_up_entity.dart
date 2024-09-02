@@ -1,19 +1,19 @@
-import 'package:anchor/features/authorization/domain/entities/user_entity.dart';
+import 'package:anchor/features/authorization/domain/entities/user_sign_up_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class SignUpEntity extends Equatable {
-  final String email;
+  final String? email;
   final String password;
-  final UserEntity userEntity;
+  final UserSignUpEntity userEntity;
 
   const SignUpEntity(
-      {required this.email, required this.password, required this.userEntity});
+      {this.email, required this.password, required this.userEntity});
 
   @override
   List<Object?> get props => [email, password, userEntity];
 
   SignUpEntity copyWith(
-      {String? email, String? password, UserEntity? userEntity}) {
+      {String? email, String? password, UserSignUpEntity? userEntity}) {
     return SignUpEntity(
         email: email ?? this.email,
         password: password ?? this.password,
