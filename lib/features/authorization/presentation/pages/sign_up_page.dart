@@ -9,6 +9,7 @@ import 'package:anchor/injection.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 @RoutePage()
 class SignUpPage extends StatelessWidget {
@@ -151,11 +152,11 @@ class _SignUpFormState extends State<_SignUpForm> {
                   side: AppTheme.borderSide(context),
                   child: TextFormField(
                     obscureText: isPasswordObscure,
-                    onChanged: (password) => bloc
-                        .add(SignUpPasswordUpdateEvent(password: password)),
+                    onChanged: (password) =>
+                        bloc.add(SignUpPasswordUpdateEvent(password: password)),
                     decoration: AppTheme.inputDecoration(context,
                         hintText: 'Enter your password',
-                        suffix: Padding(
+                        suffixIcon: Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: EyeToggleButton(
                             isOpen: isPasswordObscure,
@@ -211,6 +212,7 @@ class _SignUpFormState extends State<_SignUpForm> {
                 SquircleClipper(
                   side: AppTheme.borderSide(context),
                   child: TextFormField(
+                    mouseCursor: SystemMouseCursors.click,
                     controller: dateController,
                     readOnly: true,
                     keyboardType: TextInputType.emailAddress,
@@ -220,10 +222,11 @@ class _SignUpFormState extends State<_SignUpForm> {
                           birthDate: DateTime.tryParse(dateController.text) ??
                               DateTime.now()));
                     },
-                    decoration: AppTheme.inputDecoration(
-                      context,
-                      hintText: 'Choose your birth date',
-                    ),
+                    decoration: AppTheme.inputDecoration(context,
+                        hintText: 'Choose your birth date',
+                        suffixIcon: const MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: Icon(TablerIcons.calendar))),
                   ),
                 ),
                 if (birthDateErrorMessage != '')

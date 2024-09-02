@@ -45,7 +45,9 @@ class AppTheme {
       Widget? prefix,
       bool enabled = true,
       bool? filled,
-      Color? fillColor}) {
+      Color? fillColor,
+      Widget? suffixIcon,
+      Widget? prefixIcon}) {
     return InputDecoration(
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
@@ -56,6 +58,8 @@ class AppTheme {
       fillColor: fillColor,
       prefix: prefix,
       suffix: suffix,
+      prefixIcon: prefixIcon,
+      suffixIcon: suffixIcon,
     );
   }
 
