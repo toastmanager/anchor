@@ -13,8 +13,20 @@ class PersonalProfileUpdate extends PersonalProfileEvent {}
 
 class PersonalProfileLogOut extends PersonalProfileEvent {}
 
-class PersonalProfileFullNameChange extends PersonalProfileEvent {}
+class PersonalProfileFullNameChange extends PersonalProfileEvent {
+  final String fullName;
 
-class PersonalProfileEmailChange extends PersonalProfileEvent {}
+  const PersonalProfileFullNameChange({required this.fullName});
+}
 
-class PersonalProfileBirthDateChange extends PersonalProfileEvent {}
+class PersonalProfileEmailChange extends PersonalProfileEvent {
+  final String email;
+
+  const PersonalProfileEmailChange({required this.email});
+}
+
+class PersonalProfileBirthDateChange extends PersonalProfileEvent {
+  final DateTime birthDate;
+
+  const PersonalProfileBirthDateChange({required this.birthDate});
+}

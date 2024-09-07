@@ -25,8 +25,12 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: Routes.signUp, page: SignUpRoute.page),
         AutoRoute(
           path: Routes.events,
-          initial: true,
           page: EventsRoute.page,
+        ),
+        AutoRoute(
+          path: Routes.profile,
+          initial: true,
+          page: PersonalProfileRoute.page,
         )
       ];
 

@@ -18,6 +18,7 @@ class AppTheme {
           BuildContext context) =>
       OutlinedButtonThemeData(
           style: ButtonStyle(
+              side: WidgetStatePropertyAll(borderSide(context)),
               padding: const WidgetStatePropertyAll(
                   EdgeInsets.symmetric(horizontal: 20, vertical: 16)),
               shape: WidgetStatePropertyAll(SmoothRectangleBorder(
@@ -33,7 +34,7 @@ class AppTheme {
       Theme.of(context).colorScheme.onSurface.withOpacity(0.15);
 
   static BorderSide borderSide(BuildContext context) =>
-      BorderSide(color: Theme.of(context).dividerColor, width: 1.5);
+      BorderSide(color: dividerColor(context), width: 1.5);
 
   static TextStyle? hintStyle(BuildContext context) =>
       Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -41,6 +42,7 @@ class AppTheme {
 
   static InputDecoration inputDecoration(BuildContext context,
       {String? hintText,
+      Widget? label,
       Widget? suffix,
       Widget? prefix,
       bool enabled = true,
@@ -60,23 +62,32 @@ class AppTheme {
       suffix: suffix,
       prefixIcon: prefixIcon,
       suffixIcon: suffixIcon,
+      label: label,
     );
   }
 
   static Color secondaryTextColor(BuildContext context) =>
       Theme.of(context).colorScheme.onSurface.withOpacity(0.62);
 
-  static ThemeData lightTheme(BuildContext context) => ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-                brightness: Brightness.light,
-                seedColor: const Color(0xFF554AF0))
-            .copyWith(
-          primary: const Color(0xFF554AF0),
-        ),
-        textTheme: textTheme(context),
-        fontFamily: 'Onest',
-        filledButtonTheme: filledButtonThemeData,
-        outlinedButtonTheme: outlinedButtonThemeData(context),
-        dividerColor: dividerColor(context),
+  static OutlineInputBorder outlineInputBorder(BuildContext context) =>
+      OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: dividerColor(context), width: 1.5));
+
+  static InputDecorationTheme inputDecorationTheme(BuildContext context) =>
+      InputDecorationTheme(
+        enabledBorder: outlineInputBorder(context),
+        border: outlineInputBorder(context),
       );
+
+  static ThemeData lightTheme(BuildContext context) => ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+              brightness: Brightness.light, seedColor: const Color(0xFF554AF0))
+          .copyWith(primary: const Color(0xFF554AF0), error: Colors.red),
+      textTheme: textTheme(context),
+      fontFamily: 'Onest',
+      filledButtonTheme: filledButtonThemeData,
+      outlinedButtonTheme: outlinedButtonThemeData(context),
+      dividerColor: dividerColor(context),
+      inputDecorationTheme: inputDecorationTheme(context));
 }

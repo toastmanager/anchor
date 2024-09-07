@@ -11,7 +11,7 @@ class AuthRepositoryImpl implements AuthRepository {
   const AuthRepositoryImpl({required this.authRemoteDataSource});
 
   @override
-  signIn({required entity}) async {
+  Future<void> signIn({required entity}) async {
     try {
       await authRemoteDataSource.signIn(SignInModel.fromEntity(entity));
     } catch (e) {
@@ -20,7 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  signUp({required entity}) async {
+  Future<void> signUp({required entity}) async {
     try {
       await authRemoteDataSource.signUp(SignUpModel.fromEntity(entity));
     } catch (e) {

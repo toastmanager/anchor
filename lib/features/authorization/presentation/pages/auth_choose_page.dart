@@ -43,14 +43,14 @@ class AuthChoosePage extends StatelessWidget {
             const SizedBox(height: 20),
             ExpandedHorizontally(
                 child: FilledButton(
-              onPressed: () => router.push(SignInRoute()),
+              onPressed: () => router.push(const SignInRoute()),
               style: AppTheme.bigButton,
               child: const Text('Sign in'),
             )),
             const SizedBox(height: 20),
             ExpandedHorizontally(
                 child: OutlinedButton(
-              onPressed: () => router.push(SignUpRoute()),
+              onPressed: () => router.push(const SignUpRoute()),
               style: AppTheme.bigButton,
               child: const Text('Sign up'),
             )),
