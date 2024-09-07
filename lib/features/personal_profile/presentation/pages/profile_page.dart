@@ -6,6 +6,7 @@ import 'package:anchor/injection.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 @RoutePage()
 class PersonalProfilePage extends StatefulWidget {
@@ -19,6 +20,7 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
   late final TextEditingController fullNameController;
   late final TextEditingController emailController;
   late final TextEditingController birthDateController;
+  String? avatarUrl;
   bool isEditingMode = false;
 
   @override
@@ -37,10 +39,11 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
     super.dispose();
   }
 
-  void updateControllers(PersonalProfileEntity entity) {
+  void updateProfileData(PersonalProfileEntity entity) {
     fullNameController.text = entity.fullName;
     emailController.text = entity.email;
     birthDateController.text = entity.birthDate.toString().split(' ').first;
+    avatarUrl = entity.avatarUrl;
   }
 
   @override
@@ -69,103 +72,115 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
                     return const Text('Personal profile load failure');
                   }
                   if (state is PersonalProfileLoadSuccess) {
-                    updateControllers(state.entity);
-                    return Form(
-                      child: Column(
-                        children: [
-                          //TODO: Add avatar pick function
-                          InkWell(
-                              onTap: isEditingMode ? () {} : null,
-                              borderRadius: BorderRadius.circular(999),
-                              child: Avatar(avatarUrl: state.entity.avatarUrl)),
-                          const SizedBox(
-                            height: 60,
-                          ),
-                          TextFormField(
-                              canRequestFocus: isEditingMode,
-                              readOnly: !isEditingMode,
-                              controller: fullNameController,
-                              onChanged: (value) => bloc.add(
-                                  PersonalProfileFullNameChange(
-                                      fullName: value)),
-                              decoration: const InputDecoration(
-                                  label: Text('Full name'))),
-                          const SizedBox(
-                            height: 18,
-                          ),
-                          TextFormField(
-                              canRequestFocus: isEditingMode,
-                              readOnly: !isEditingMode,
-                              controller: emailController,
-                              onChanged: (value) => bloc.add(
-                                  PersonalProfileEmailChange(email: value)),
-                              decoration:
-                                  const InputDecoration(label: Text('Email'))),
-                          const SizedBox(
-                            height: 18,
-                          ),
-                          //TODO: Add birth date pick function
-                          TextFormField(
-                              canRequestFocus: isEditingMode,
-                              readOnly: true,
-                              controller: birthDateController,
-                              onChanged: (value) => bloc.add(
-                                  PersonalProfileBirthDateChange(
-                                      birthDate: DateTime.parse(value))),
-                              decoration: const InputDecoration(
-                                  label: Text('Birth date'))),
-                          const SizedBox(
-                            height: 18,
-                          ),
-                          !isEditingMode
-                              ? ExpandedHorizontally(
-                                  child: FilledButton(
-                                      onPressed: () =>
-                                          setState(() => isEditingMode = true),
-                                      child: const Text('Edit')))
-                              : Row(
-                                  children: [
-                                    Expanded(
-                                        child: FilledButton(
-                                            style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStatePropertyAll(
-                                                        Theme.of(context)
-                                                            .colorScheme
-                                                            .secondary)),
-                                            onPressed: () => setState(
-                                                () => isEditingMode = false),
-                                            child: const Text('Cancel'))),
-                                    const SizedBox(width: 16),
-                                    Expanded(
-                                      child: FilledButton(
-                                          onPressed: () => setState(() {
-                                                isEditingMode = false;
-                                                bloc.add(
-                                                    PersonalProfileUpdate());
-                                              }),
-                                          child: const Text('Apply')),
-                                    )
-                                  ],
-                                ),
-                          const SizedBox(
-                            height: 18,
-                          ),
-                          ExpandedHorizontally(
-                            child: FilledButton(
-                              onPressed: () =>
-                                  bloc.add(PersonalProfileLogOut()),
-                              style: ButtonStyle(
-                                  backgroundColor: WidgetStatePropertyAll(
-                                      Theme.of(context).colorScheme.error)),
-                              child: const Text('Log out'),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
+                    updateProfileData(state.entity);
                   }
-                  return const Text('Unexpected Error');
+                  return Form(
+                    child: Column(
+                      children: [
+                        //TODO: Add avatar pick function
+                        InkWell(
+                            onTap: isEditingMode ? () {} : null,
+                            borderRadius: BorderRadius.circular(999),
+                            child: Avatar(avatarUrl: avatarUrl)),
+
+                        if (isEditingMode) ...[
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          TextButton(
+                              onPressed: () {}, child: const Text('Reset'))
+                        ],
+
+                        const SizedBox(
+                          height: 60,
+                        ),
+                        TextFormField(
+                            canRequestFocus: isEditingMode,
+                            readOnly: !isEditingMode,
+                            controller: fullNameController,
+                            onChanged: (value) => bloc.add(
+                                PersonalProfileFullNameChange(fullName: value)),
+                            decoration: const InputDecoration(
+                                label: Text('Full name'))),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        TextFormField(
+                            canRequestFocus: isEditingMode,
+                            readOnly: !isEditingMode,
+                            controller: emailController,
+                            onChanged: (value) => bloc
+                                .add(PersonalProfileEmailChange(email: value)),
+                            decoration:
+                                const InputDecoration(label: Text('Email'))),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        TextFormField(
+                            mouseCursor: !isEditingMode
+                                ? null
+                                : SystemMouseCursors.click,
+                            onTap: !isEditingMode
+                                ? null
+                                : () async {
+                                    await selectBirthDate(bloc);
+                                  },
+                            canRequestFocus: isEditingMode,
+                            readOnly: true,
+                            controller: birthDateController,
+                            decoration: InputDecoration(
+                                suffix: isEditingMode
+                                    ? const Icon(TablerIcons.calendar)
+                                    : null,
+                                label: const Text('Birth date'))),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        !isEditingMode
+                            ? ExpandedHorizontally(
+                                child: FilledButton(
+                                    onPressed: () =>
+                                        setState(() => isEditingMode = true),
+                                    child: const Text('Edit')))
+                            : Row(
+                                children: [
+                                  Expanded(
+                                      child: FilledButton(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  WidgetStatePropertyAll(
+                                                      Theme.of(context)
+                                                          .colorScheme
+                                                          .secondary)),
+                                          onPressed: () => setState(
+                                              () => isEditingMode = false),
+                                          child: const Text('Cancel'))),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: FilledButton(
+                                        onPressed: () => setState(() {
+                                              isEditingMode = false;
+                                              bloc.add(PersonalProfileUpdate());
+                                            }),
+                                        child: const Text('Apply')),
+                                  )
+                                ],
+                              ),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        ExpandedHorizontally(
+                          child: FilledButton(
+                            onPressed: () => bloc.add(PersonalProfileLogOut()),
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(
+                                    Theme.of(context).colorScheme.error)),
+                            child: const Text('Log out'),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
                 },
               );
             }),
@@ -173,5 +188,18 @@ class _PersonalProfilePageState extends State<PersonalProfilePage> {
         ),
       ),
     );
+  }
+
+  Future<void> selectBirthDate(PersonalProfileBloc bloc) async {
+    final dateNow = DateTime.now();
+    DateTime? date = await showDatePicker(
+        context: context,
+        initialDate: dateNow,
+        firstDate: DateTime(1900),
+        lastDate: dateNow);
+    if (date != null) {
+      bloc.add(PersonalProfileBirthDateChange(birthDate: date));
+      birthDateController.text = date.toString().split(' ')[0];
+    }
   }
 }
