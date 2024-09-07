@@ -9,7 +9,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 @RoutePage()
 class AuthChoosePage extends StatelessWidget {
-  const AuthChoosePage({super.key});
+  final Function(bool?) onResult;
+
+  const AuthChoosePage({super.key, required this.onResult});
 
   @override
   Widget build(BuildContext context) {
@@ -35,20 +37,22 @@ class AuthChoosePage extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'Show your skills with us!',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppTheme.secondaryTextColor(context)),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(color: AppTheme.secondaryTextColor(context)),
             ),
             const SizedBox(height: 20),
             ExpandedHorizontally(
                 child: FilledButton(
-              onPressed: () => router.push(const SignInRoute()),
+              onPressed: () => router.push(SignInRoute(onResult: onResult)),
               style: AppTheme.bigButton,
               child: const Text('Sign in'),
             )),
             const SizedBox(height: 20),
             ExpandedHorizontally(
                 child: OutlinedButton(
-              onPressed: () => router.push(const SignUpRoute()),
+              onPressed: () => router.push(SignUpRoute(onResult: onResult)),
               style: AppTheme.bigButton,
               child: const Text('Sign up'),
             )),

@@ -12,7 +12,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+  final Function(bool?) onResult;
+
+  const SignInPage({super.key, required this.onResult});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _SignInForm(formGlobalKey),
+                _SignInForm(formGlobalKey, onResult),
                 const SizedBox(
                   height: 30,
                 ),
@@ -51,7 +53,9 @@ class SignInPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () => router.push(const SignUpRoute()),
+                      onPressed: () => router.push(SignUpRoute(
+                        onResult: onResult
+                      )),
                       child: RichText(
                         text: TextSpan(
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -81,8 +85,9 @@ class SignInPage extends StatelessWidget {
 }
 
 class _SignInForm extends StatefulWidget {
-  const _SignInForm(this.formGlobalKey);
+  const _SignInForm(this.formGlobalKey, this.onResult);
 
+  final Function(bool?) onResult;
   final GlobalKey<FormState> formGlobalKey;
 
   @override
@@ -99,101 +104,110 @@ class __SignInFormState extends State<_SignInForm> {
     final formGlobalKey = widget.formGlobalKey;
     return BlocProvider(
       create: (context) => sl<SignInBloc>(),
-      child: BlocBuilder<SignInBloc, SignInState>(
-          builder: (context, state) {
-            return Form(
-              key: formGlobalKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
+        if (state is SignInSuccess) {
+          widget.onResult.call(true);
+        }
+        if (state is SignInFailed) {
+          widget.onResult.call(false);
+        }
+        return Form(
+          key: formGlobalKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Email',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w600)),
+              const SizedBox(
+                height: 10,
+              ),
+              SquircleClipper(
+                side: AppTheme.borderSide(context),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (email) => context
+                      .read<SignInBloc>()
+                      .add(SignInEmailUpdateEvent(email: email)),
+                  decoration: AppTheme.inputDecoration(
+                    context,
+                    hintText: 'Enter your email',
+                  ),
+                ),
+              ),
+              if (emailErrorMessage != '')
+                Text(emailErrorMessage,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: Theme.of(context).colorScheme.error)),
+              const SizedBox(
+                height: 10,
+              ),
+              Text('Password',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w600)),
+              const SizedBox(
+                height: 10,
+              ),
+              SquircleClipper(
+                side: AppTheme.borderSide(context),
+                child: TextFormField(
+                  obscureText: isPasswordObscure,
+                  onChanged: (password) => context
+                      .read<SignInBloc>()
+                      .add(SignInPasswordUpdateEvent(password: password)),
+                  decoration: AppTheme.inputDecoration(context,
+                      hintText: 'Enter your password',
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: EyeToggleButton(
+                          isOpen: isPasswordObscure,
+                          onTap: () => setState(() {
+                            isPasswordObscure = !isPasswordObscure;
+                          }),
+                        ),
+                      )),
+                ),
+              ),
+              if (passwordErrorMessage != '')
+                Text(passwordErrorMessage,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: Theme.of(context).colorScheme.error)),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('Email',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(fontWeight: FontWeight.w600)),
-                  const SizedBox(
-                    height: 10,
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Forgot your password?'),
                   ),
-                  SquircleClipper(
-                    side: AppTheme.borderSide(context),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (email) => context
-                          .read<SignInBloc>()
-                          .add(SignInEmailUpdateEvent(email: email)),
-                      decoration: AppTheme.inputDecoration(
-                        context,
-                        hintText: 'Enter your email',
-                      ),
-                    ),
-                  ),
-                  if (emailErrorMessage != '')
-                    Text(emailErrorMessage,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.error)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text('Password',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(fontWeight: FontWeight.w600)),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SquircleClipper(
-                    side: AppTheme.borderSide(context),
-                    child: TextFormField(
-                      obscureText: isPasswordObscure,
-                      onChanged: (password) => context
-                          .read<SignInBloc>()
-                          .add(SignInPasswordUpdateEvent(password: password)),
-                      decoration: AppTheme.inputDecoration(context,
-                          hintText: 'Enter your password',
-                          suffix: Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: EyeToggleButton(
-                              isOpen: isPasswordObscure,
-                              onTap: () => setState(() {
-                                isPasswordObscure = !isPasswordObscure;
-                              }),
-                            ),
-                          )),
-                    ),
-                  ),
-                  if (passwordErrorMessage != '')
-                    Text(passwordErrorMessage,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.error)),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text('Forgot your password?'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ExpandedHorizontally(
-                      child: FilledButton(
-                          onPressed: () {
-                            if (formGlobalKey.currentState!.validate()) {
-                              context.read<SignInBloc>().add(SignInExecuteEvent());
-                            }
-                          },
-                          style: AppTheme.bigButton,
-                          child: const Text('Sign in'))),
                 ],
               ),
-            );
-          }),
+              const SizedBox(
+                height: 20,
+              ),
+              ExpandedHorizontally(
+                  child: FilledButton(
+                      onPressed: () {
+                        if (formGlobalKey.currentState!.validate()) {
+                          context.read<SignInBloc>().add(SignInExecuteEvent());
+                        }
+                      },
+                      style: AppTheme.bigButton,
+                      child: const Text('Sign in'))),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

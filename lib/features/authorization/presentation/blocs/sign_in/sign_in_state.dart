@@ -14,3 +14,5 @@ class SignInFailed extends SignInState {
 
   const SignInFailed({required this.message});
 }
+
+class SignInSuccess extends SignInState {}

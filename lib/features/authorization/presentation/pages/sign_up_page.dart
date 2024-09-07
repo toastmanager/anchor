@@ -13,7 +13,9 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 @RoutePage()
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+  final Function(bool?) onResult;
+
+  const SignUpPage({super.key, required this.onResult});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _SignUpForm(formGlobalKey: formGlobalKey),
+                _SignUpForm(formGlobalKey: formGlobalKey, onResult: onResult),
                 const SizedBox(
                   height: 30,
                 ),
@@ -53,7 +55,8 @@ class SignUpPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () => router.push(const SignInRoute()),
+                      onPressed: () =>
+                          router.push(SignInRoute(onResult: onResult)),
                       child: RichText(
                         text: TextSpan(
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -83,8 +86,9 @@ class SignUpPage extends StatelessWidget {
 }
 
 class _SignUpForm extends StatefulWidget {
-  const _SignUpForm({required this.formGlobalKey});
+  const _SignUpForm({required this.formGlobalKey, required this.onResult});
 
+  final Function(bool?) onResult;
   final GlobalKey<FormState> formGlobalKey;
 
   @override
@@ -106,6 +110,12 @@ class _SignUpFormState extends State<_SignUpForm> {
       create: (context) => sl<SignUpBloc>(),
       child: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
+          if (state is SignUpSuccess) {
+            widget.onResult.call(true);
+          }
+          if (state is SignUpFailed) {
+            widget.onResult.call(false);
+          }
           final bloc = context.read<SignUpBloc>();
           return Form(
             key: formGlobalKey,

@@ -28,7 +28,12 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     _signInEntity = _signInEntity.copyWith(password: event.password);
   }
 
-  void _onSignInUpdate(SignInExecuteEvent event, Emitter<SignInState> emit) {
-    signIn.execute(_signInEntity);
+  Future<void> _onSignInUpdate(SignInExecuteEvent event, Emitter<SignInState> emit) async {
+    try {
+      await signIn.execute(_signInEntity);
+      emit(SignInSuccess());
+    } catch (e) {
+      emit(const SignInFailed(message: 'Failed to sign in with give credentials'));
+    }
   }
 }

@@ -1,6 +1,8 @@
 import 'package:anchor/features/authorization/data/models/sign_in_model.dart';
 import 'package:anchor/features/authorization/data/models/sign_up_model.dart';
+import 'package:anchor/injection.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AuthRemoteDataSource {
@@ -20,6 +22,7 @@ class AuthorizationRemoteDataSourceImpl implements AuthRemoteDataSource {
       await client.auth
           .signInWithPassword(email: model.email, password: model.password);
     } catch (e) {
+      sl<Logger>().e('Error while sign in', error: e);
       rethrow;
     }
   }
@@ -33,6 +36,7 @@ class AuthorizationRemoteDataSourceImpl implements AuthRemoteDataSource {
         data: model.userModel.toJson(),
       );
     } catch (e) {
+      sl<Logger>().e('Error while sign up', error: e);
       rethrow;
     }
   }

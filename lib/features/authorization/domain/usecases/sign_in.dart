@@ -8,6 +8,6 @@ class SignIn {
 
   const SignIn({required this.repository});
 
-  Future<void> execute(SignInEntity signInEntity) =>
-      repository.signIn(entity: signInEntity);
+  Future<void> execute(SignInEntity signInEntity) async =>
+      await repository.signIn(entity: signInEntity);
 }

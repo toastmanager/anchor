@@ -46,7 +46,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             signUpEntity.userEntity.copyWith(birthDate: event.birthDate));
   }
 
-  void _onSignUp(SignUpExecuteEvent event, Emitter<SignUpState> emit) {
-    signUp.execute(signUpEntity);
+  Future<void> _onSignUp(
+      SignUpExecuteEvent event, Emitter<SignUpState> emit) async {
+    try {
+      await signUp.execute(signUpEntity);
+      emit(SignUpSuccess());
+    } catch (e) {
+      emit(const SignUpFailed(message: "Failed to sign up"));
+    }
   }
 }
