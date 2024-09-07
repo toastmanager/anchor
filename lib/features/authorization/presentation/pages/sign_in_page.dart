@@ -12,9 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class SignInPage extends StatelessWidget {
-  final Function(bool?) onResult;
-
-  const SignInPage({super.key, required this.onResult});
+  const SignInPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,7 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _SignInForm(formGlobalKey, onResult),
+                _SignInForm(formGlobalKey),
                 const SizedBox(
                   height: 30,
                 ),
@@ -53,9 +51,7 @@ class SignInPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                      onPressed: () => router.push(SignUpRoute(
-                        onResult: onResult
-                      )),
+                      onPressed: () => router.push(const SignUpRoute()),
                       child: RichText(
                         text: TextSpan(
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -85,9 +81,8 @@ class SignInPage extends StatelessWidget {
 }
 
 class _SignInForm extends StatefulWidget {
-  const _SignInForm(this.formGlobalKey, this.onResult);
+  const _SignInForm(this.formGlobalKey);
 
-  final Function(bool?) onResult;
   final GlobalKey<FormState> formGlobalKey;
 
   @override
@@ -98,6 +93,7 @@ class __SignInFormState extends State<_SignInForm> {
   bool isPasswordObscure = true;
   String emailErrorMessage = '';
   String passwordErrorMessage = '';
+  final router = sl<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -106,10 +102,7 @@ class __SignInFormState extends State<_SignInForm> {
       create: (context) => sl<SignInBloc>(),
       child: BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
         if (state is SignInSuccess) {
-          widget.onResult.call(true);
-        }
-        if (state is SignInFailed) {
-          widget.onResult.call(false);
+          router.push(const EventsRoute());
         }
         return Form(
           key: formGlobalKey,

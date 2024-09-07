@@ -13,7 +13,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   signIn({required entity}) async {
     try {
-      authRemoteDataSource.signIn(SignInModel.fromEntity(entity));
+      await authRemoteDataSource.signIn(SignInModel.fromEntity(entity));
     } catch (e) {
       rethrow;
     }
@@ -22,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   signUp({required entity}) async {
     try {
-      authRemoteDataSource.signUp(SignUpModel.fromEntity(entity));
+      await authRemoteDataSource.signUp(SignUpModel.fromEntity(entity));
     } catch (e) {
       rethrow;
     }

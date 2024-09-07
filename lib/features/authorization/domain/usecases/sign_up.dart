@@ -8,6 +8,6 @@ class SignUp {
 
   const SignUp({required this.repository});
 
-  Future<void> execute(SignUpEntity signUpEntity) =>
-      repository.signUp(entity: signUpEntity);
+  Future<void> execute(SignUpEntity signUpEntity) async =>
+      await repository.signUp(entity: signUpEntity);
 }

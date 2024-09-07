@@ -24,9 +24,12 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: Routes.signIn, page: SignInRoute.page),
         AutoRoute(path: Routes.signUp, page: SignUpRoute.page),
         AutoRoute(
-            path: Routes.events,
-            initial: true,
-            page: EventsRoute.page,
-            guards: [AuthGuard(client: client)])
+          path: Routes.events,
+          initial: true,
+          page: EventsRoute.page,
+        )
       ];
+
+  @override
+  List<AutoRouteGuard> get guards => [AuthGuard(client: client)];
 }

@@ -13,9 +13,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 @RoutePage()
 class SignUpPage extends StatelessWidget {
-  final Function(bool?) onResult;
-
-  const SignUpPage({super.key, required this.onResult});
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,7 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _SignUpForm(formGlobalKey: formGlobalKey, onResult: onResult),
+                _SignUpForm(formGlobalKey: formGlobalKey),
                 const SizedBox(
                   height: 30,
                 ),
@@ -56,7 +54,7 @@ class SignUpPage extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () =>
-                          router.push(SignInRoute(onResult: onResult)),
+                          router.push(const SignInRoute()),
                       child: RichText(
                         text: TextSpan(
                             style: Theme.of(context).textTheme.bodyMedium,
@@ -86,9 +84,8 @@ class SignUpPage extends StatelessWidget {
 }
 
 class _SignUpForm extends StatefulWidget {
-  const _SignUpForm({required this.formGlobalKey, required this.onResult});
+  const _SignUpForm({required this.formGlobalKey});
 
-  final Function(bool?) onResult;
   final GlobalKey<FormState> formGlobalKey;
 
   @override
@@ -102,6 +99,7 @@ class _SignUpFormState extends State<_SignUpForm> {
   String fullNameErrorMessage = '';
   String birthDateErrorMessage = '';
   final dateController = TextEditingController();
+  final router = sl<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +109,7 @@ class _SignUpFormState extends State<_SignUpForm> {
       child: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
           if (state is SignUpSuccess) {
-            widget.onResult.call(true);
-          }
-          if (state is SignUpFailed) {
-            widget.onResult.call(false);
+            router.push(const EventsRoute());
           }
           final bloc = context.read<SignUpBloc>();
           return Form(

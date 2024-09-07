@@ -1,3 +1,4 @@
+import 'package:anchor/core/authorization/auth_provider.dart';
 import 'package:anchor/core/constants/constants.dart';
 import 'package:anchor/core/routes/router.dart';
 import 'package:anchor/core/theme/app_theme.dart';
@@ -27,12 +28,17 @@ class MainApp extends StatelessWidget {
   MainApp({super.key});
 
   final _appRouter = sl<AppRouter>();
+  final _client = sl<SupabaseClient>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
         title: 'Anchor',
         theme: AppTheme.lightTheme(context),
-        routerConfig: _appRouter.config());
+        routerConfig: _appRouter.config(
+          reevaluateListenable: StreamNotifier(
+            _client.auth.onAuthStateChange
+          )
+        ));
   }
 }
