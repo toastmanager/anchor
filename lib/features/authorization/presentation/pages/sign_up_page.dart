@@ -109,7 +109,7 @@ class _SignUpFormState extends State<_SignUpForm> {
       child: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
           if (state is SignUpSuccess) {
-            router.push(const PersonalProfileRoute());
+            router.push(const NavbarRoute());
           }
           final bloc = context.read<SignUpBloc>();
           return Form(
