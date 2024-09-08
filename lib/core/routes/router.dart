@@ -24,14 +24,19 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: Routes.signIn, page: SignInRoute.page),
         AutoRoute(path: Routes.signUp, page: SignUpRoute.page),
         AutoRoute(
-          path: Routes.events,
-          page: EventsRoute.page,
-        ),
-        AutoRoute(
-          path: Routes.profile,
-          initial: true,
-          page: PersonalProfileRoute.page,
-        )
+            path: Routes.mainScreen,
+            initial: true,
+            page: NavbarRoute.page,
+            children: [
+              AutoRoute(
+                path: Routes.events,
+                page: EventsRoute.page,
+              ),
+              AutoRoute(
+                path: Routes.profile,
+                page: PersonalProfileRoute.page,
+              )
+            ]),
       ];
 
   @override

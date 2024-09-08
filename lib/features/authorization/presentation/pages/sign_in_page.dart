@@ -102,7 +102,7 @@ class __SignInFormState extends State<_SignInForm> {
       create: (context) => sl<SignInBloc>(),
       child: BlocBuilder<SignInBloc, SignInState>(builder: (context, state) {
         if (state is SignInSuccess) {
-          router.push(const PersonalProfileRoute());
+          router.push(const NavbarRoute());
         }
         return Form(
           key: formGlobalKey,

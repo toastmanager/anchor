@@ -9,18 +9,16 @@ class EventsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: TextButton(
-            onPressed: () async {
-              try {
-                await sl<SupabaseClient>().auth.signOut();
-              } catch (e) {
-                rethrow;
-              }
-            },
-            child: const Text('Sign Out')),
-      ),
+    return Center(
+      child: TextButton(
+          onPressed: () async {
+            try {
+              await sl<SupabaseClient>().auth.signOut();
+            } catch (e) {
+              rethrow;
+            }
+          },
+          child: const Text('Sign Out')),
     );
   }
 }

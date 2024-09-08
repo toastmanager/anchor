@@ -33,7 +33,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       await signIn.execute(_signInEntity);
       emit(SignInSuccess());
     } catch (e) {
-      emit(const SignInFailed(message: 'Failed to sign in with give credentials'));
+      emit(const SignInFailed(message: 'Failed to sign in with given credentials'));
     }
   }
 }
