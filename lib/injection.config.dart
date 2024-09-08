@@ -26,6 +26,20 @@ import 'features/authorization/presentation/blocs/sign_in/sign_in_bloc.dart'
     as _i618;
 import 'features/authorization/presentation/blocs/sign_up/sign_up_bloc.dart'
     as _i413;
+import 'features/events/data/datasources/remote/events_remote_datasource.dart'
+    as _i1010;
+import 'features/events/data/repositories/events_repository_impl.dart'
+    as _i1032;
+import 'features/events/domain/blocs/create_event_bloc/create_event_bloc.dart'
+    as _i800;
+import 'features/events/domain/blocs/events_bloc/events_bloc.dart' as _i926;
+import 'features/events/domain/repositories/events_repository.dart' as _i244;
+import 'features/events/domain/usecases/create_event.dart' as _i883;
+import 'features/events/domain/usecases/delete_event.dart' as _i179;
+import 'features/events/domain/usecases/get_completed_events.dart' as _i569;
+import 'features/events/domain/usecases/get_selected_events.dart' as _i842;
+import 'features/events/domain/usecases/get_upcoming_events.dart' as _i245;
+import 'features/events/domain/usecases/update_event.dart' as _i742;
 import 'features/personal_profile/data/datasources/remote/personal_profile_remote_datasource.dart'
     as _i966;
 import 'features/personal_profile/data/repositories/personal_profile_repository_impl.dart'
@@ -55,9 +69,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final loggerModule = _$LoggerModule();
     final supabaseModule = _$SupabaseModule();
+    gh.factory<_i800.CreateEventBloc>(() => _i800.CreateEventBloc());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.logger);
     gh.lazySingleton<_i454.Supabase>(() => supabaseModule.supabase);
     gh.lazySingleton<_i454.SupabaseClient>(() => supabaseModule.supabaseClient);
+    gh.factory<_i1010.EventsRemoteDatasource>(
+        () => _i1010.EventsRemoteDatasourceImpl(
+              client: gh<_i454.SupabaseClient>(),
+              logger: gh<_i974.Logger>(),
+            ));
     gh.lazySingleton<_i966.PersonalProfileRemoteDatasource>(
         () => _i966.PersonalProfileRemoteDatasourceImpl(
               client: gh<_i454.SupabaseClient>(),
@@ -68,11 +88,25 @@ extension GetItInjectableX on _i174.GetIt {
             client: gh<_i454.SupabaseClient>()));
     gh.singleton<_i66.AppRouter>(
         () => _i66.AppRouter(client: gh<_i454.SupabaseClient>()));
+    gh.lazySingleton<_i244.EventsRepository>(() => _i1032.EventsRepositoryImpl(
+        remoteDatasource: gh<_i1010.EventsRemoteDatasource>()));
     gh.lazySingleton<_i16.PersonalProfileRepository>(() =>
         _i248.PersonalProfileRepositoryImpl(
             datasource: gh<_i966.PersonalProfileRemoteDatasource>()));
     gh.lazySingleton<_i76.AuthRepository>(() => _i1046.AuthRepositoryImpl(
         authRemoteDataSource: gh<_i969.AuthRemoteDataSource>()));
+    gh.lazySingleton<_i883.CreateEvent>(
+        () => _i883.CreateEvent(repository: gh<_i244.EventsRepository>()));
+    gh.lazySingleton<_i179.DeleteEvent>(
+        () => _i179.DeleteEvent(repository: gh<_i244.EventsRepository>()));
+    gh.lazySingleton<_i569.GetCompletedEvents>(() =>
+        _i569.GetCompletedEvents(repository: gh<_i244.EventsRepository>()));
+    gh.lazySingleton<_i842.GetSelectedEvents>(() =>
+        _i842.GetSelectedEvents(repository: gh<_i244.EventsRepository>()));
+    gh.lazySingleton<_i245.GetUpcomingEvents>(() =>
+        _i245.GetUpcomingEvents(repository: gh<_i244.EventsRepository>()));
+    gh.lazySingleton<_i742.UpdateEvent>(
+        () => _i742.UpdateEvent(repository: gh<_i244.EventsRepository>()));
     gh.lazySingleton<_i128.GetPersonalProfile>(() => _i128.GetPersonalProfile(
         repository: gh<_i16.PersonalProfileRepository>()));
     gh.lazySingleton<_i689.LogOut>(
@@ -93,6 +127,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i413.SignUpBloc(signUp: gh<_i963.SignUp>()));
     gh.factory<_i618.SignInBloc>(
         () => _i618.SignInBloc(signIn: gh<_i560.SignIn>()));
+    gh.factory<_i926.EventsBloc>(() => _i926.EventsBloc(
+          getCompletedEvents: gh<_i569.GetCompletedEvents>(),
+          getSelectedEvents: gh<_i842.GetSelectedEvents>(),
+          getUpcomingEvents: gh<_i245.GetUpcomingEvents>(),
+        ));
     return this;
   }
 }

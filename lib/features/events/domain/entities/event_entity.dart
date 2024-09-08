@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 
 class EventEntity extends Equatable {

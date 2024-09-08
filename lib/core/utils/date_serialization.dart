@@ -1,9 +1,15 @@
 class DateSerialization {
-  static String toJson(DateTime date) {
-    return date.toIso8601String();
+  static String? tryToJson(DateTime? date) {
+    return date?.toIso8601String();
   }
 
-  static DateTime fromJson(String timestamp) => DateTime.parse(timestamp);
+  static String toJson(DateTime date) {
+    return tryToJson(date)!;
+  }
+
+  static DateTime? tryFromJson(String? timestamp) =>
+      timestamp != null ? DateTime.parse(timestamp) : null;
+  static DateTime fromJson(String timestamp) => tryFromJson(timestamp)!;
 
   static List<String> listToJson(List<DateTime> dates) {
     List<String> res = [];
