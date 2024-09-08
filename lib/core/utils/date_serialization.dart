@@ -1,6 +1,6 @@
 class DateSerialization {
   static String toJson(DateTime date) {
-    return date.toUtc().toIso8601String();
+    return date.toIso8601String();
   }
 
   static DateTime fromJson(String timestamp) => DateTime.parse(timestamp);
