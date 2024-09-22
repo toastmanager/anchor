@@ -11,8 +11,8 @@ class NavbarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsRouter(
       routes: const [
-        PersonalProfileRoute(),
         EventsRoute(),
+        PersonalProfileRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
@@ -27,9 +27,9 @@ class NavbarScreen extends StatelessWidget {
               },
               items: const [
                 BottomNavigationBarItem(
-                    icon: Icon(TablerIcons.user), label: 'Profile'),
-                BottomNavigationBarItem(
                     icon: Icon(TablerIcons.star_filled), label: 'Events'),
+                BottomNavigationBarItem(
+                    icon: Icon(TablerIcons.user), label: 'Profile'),
               ]),
         );
       },

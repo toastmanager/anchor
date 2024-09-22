@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 
 class EventEntity extends Equatable {
@@ -11,6 +10,7 @@ class EventEntity extends Equatable {
   final String? imageUrl;
   final int reward;
   final String? author;
+  final bool isParticipant;
 
   const EventEntity(
       {required this.id,
@@ -21,6 +21,7 @@ class EventEntity extends Equatable {
       required this.color,
       required this.reward,
       required this.author,
+      this.isParticipant = false,
       this.imageUrl});
 
   @override
@@ -43,9 +44,10 @@ class EventEntity extends Equatable {
       String? description,
       DateTime? startDate,
       int? color,
-      ValueGetter<String?>? imageUrl,
+      String? imageUrl,
       int? reward,
-      String? author}) {
+      String? author,
+      bool? isParticipant}) {
     return EventEntity(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
@@ -53,9 +55,10 @@ class EventEntity extends Equatable {
         description: description ?? this.description,
         startDate: startDate ?? this.startDate,
         color: color ?? this.color,
-        imageUrl: imageUrl != null ? imageUrl() : this.imageUrl,
+        imageUrl: imageUrl ?? this.imageUrl,
         reward: reward ?? this.reward,
-        author: author ?? this.author);
+        author: author ?? this.author,
+        isParticipant: isParticipant ?? this.isParticipant);
   }
 
   @override

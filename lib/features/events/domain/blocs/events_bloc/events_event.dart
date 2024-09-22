@@ -12,3 +12,9 @@ class EventsUpcomingLoad extends EventsEvent {}
 class EventsSelectedLoad extends EventsEvent {}
 
 class EventsCompletedLoad extends EventsEvent {}
+
+class EventsSwitchParticipation extends EventsEvent {
+  final int eventId;
+
+  const EventsSwitchParticipation({required this.eventId});
+}

@@ -14,6 +14,9 @@ abstract class EventsRepository {
 
   Future<void> update({required EventEntity entity});
 
+  /// Returns true if after switching user is participant and false if user is not
+  Future<bool> switchParticipitationStatus({required int id});
+
   Future<List<EventEntity>> getUpcoming();
 
   Future<List<EventEntity>> getSelected();

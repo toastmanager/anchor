@@ -90,4 +90,20 @@ class EventsRepositoryImpl implements EventsRepository {
       rethrow;
     }
   }
+  
+  @override
+  Future<bool> switchParticipitationStatus({required int id}) async {
+    try {
+      final event = await remoteDatasource.fetchEvent(id: id);
+      if (event.isParticipant) {
+        await remoteDatasource.unparticipate(eventId: id);
+        return false;
+      } else {
+        await remoteDatasource.participate(eventId: id);
+        return true;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

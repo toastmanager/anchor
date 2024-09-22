@@ -8,5 +8,5 @@ class GetCompletedEvents {
 
   const GetCompletedEvents({required this.repository});
 
-  Future<List<EventEntity>> execute() async => await repository.getUpcoming();
+  Future<List<EventEntity>> execute() async => await repository.getCompleted();
 }

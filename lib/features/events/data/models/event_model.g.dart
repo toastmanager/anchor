@@ -12,8 +12,9 @@ EventModel _$EventModelFromJson(Map<String, dynamic> json) => EventModel(
       name: json['name'] as String,
       description: json['description'] as String,
       reward: (json['reward'] as num).toInt(),
+      isParticipant: json['is_participant'] as bool? ?? false,
       startDate: DateSerialization.tryFromJson(json['start_date'] as String?),
-      color: (json['color'] as num?)?.toInt(),
+      color: HexUtils.tryParse(json['color'] as String?),
       imageUrl: json['image_url'] as String?,
       author: json['author'] as String?,
     );

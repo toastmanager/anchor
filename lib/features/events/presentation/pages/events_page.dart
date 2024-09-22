@@ -1,7 +1,9 @@
+import 'package:anchor/features/events/domain/blocs/events_bloc/events_bloc.dart';
+import 'package:anchor/features/events/presentation/widgets/upcoming_events_screen.dart';
 import 'package:anchor/injection.dart';
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class EventsPage extends StatelessWidget {
@@ -9,16 +11,12 @@ class EventsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: TextButton(
-          onPressed: () async {
-            try {
-              await sl<SupabaseClient>().auth.signOut();
-            } catch (e) {
-              rethrow;
-            }
-          },
-          child: const Text('Sign Out')),
+    return BlocProvider(
+      create: (context) => sl<EventsBloc>(),
+      child: const Padding(
+        padding: EdgeInsets.all(16),
+        child: UpcomingEventsScreen(),
+      ),
     );
   }
 }

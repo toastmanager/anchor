@@ -39,6 +39,8 @@ import 'features/events/domain/usecases/delete_event.dart' as _i179;
 import 'features/events/domain/usecases/get_completed_events.dart' as _i569;
 import 'features/events/domain/usecases/get_selected_events.dart' as _i842;
 import 'features/events/domain/usecases/get_upcoming_events.dart' as _i245;
+import 'features/events/domain/usecases/switch_event_participation.dart'
+    as _i549;
 import 'features/events/domain/usecases/update_event.dart' as _i742;
 import 'features/personal_profile/data/datasources/remote/personal_profile_remote_datasource.dart'
     as _i966;
@@ -107,6 +109,9 @@ extension GetItInjectableX on _i174.GetIt {
         _i245.GetUpcomingEvents(repository: gh<_i244.EventsRepository>()));
     gh.lazySingleton<_i742.UpdateEvent>(
         () => _i742.UpdateEvent(repository: gh<_i244.EventsRepository>()));
+    gh.lazySingleton<_i549.SwitchEventParticipation>(() =>
+        _i549.SwitchEventParticipation(
+            repository: gh<_i244.EventsRepository>()));
     gh.lazySingleton<_i128.GetPersonalProfile>(() => _i128.GetPersonalProfile(
         repository: gh<_i16.PersonalProfileRepository>()));
     gh.lazySingleton<_i689.LogOut>(
@@ -125,13 +130,14 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i413.SignUpBloc>(
         () => _i413.SignUpBloc(signUp: gh<_i963.SignUp>()));
-    gh.factory<_i618.SignInBloc>(
-        () => _i618.SignInBloc(signIn: gh<_i560.SignIn>()));
     gh.factory<_i926.EventsBloc>(() => _i926.EventsBloc(
           getCompletedEvents: gh<_i569.GetCompletedEvents>(),
           getSelectedEvents: gh<_i842.GetSelectedEvents>(),
           getUpcomingEvents: gh<_i245.GetUpcomingEvents>(),
+          switchEventParticipation: gh<_i549.SwitchEventParticipation>(),
         ));
+    gh.factory<_i618.SignInBloc>(
+        () => _i618.SignInBloc(signIn: gh<_i560.SignIn>()));
     return this;
   }
 }
